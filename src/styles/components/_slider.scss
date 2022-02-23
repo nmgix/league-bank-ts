@@ -1,0 +1,7 @@
+@use "../base" as colors;
+
+.slider {
+  width: 100%;
+  height: 400px;
+  background-color: colors.color(colors.$edging-secondary);
+}

@@ -7,26 +7,32 @@ import { FAQPage } from "./pages/FAQPage";
 import { Home } from "./pages/Home";
 import { Page404 } from "./pages/Page404";
 import { ProtectedPage } from "./pages/ProtectedPage";
+import { Footer } from "./components/Footer";
+import { Header } from "./components/Header";
 
 import "./styles/main.scss";
 
 ReactDOM.render(
   <BrowserRouter>
-    <Routes>
-      <Route path='/' element={<Home />} />
-      <Route
-        path='home'
-        element={
-          <ProtectedPage redirectTo={"/"}>
-            <Outlet />
-          </ProtectedPage>
-        }>
-        <Route index element={<ClientHomePage />} />
-        <Route path='personal-data' element={<PersonalData />} />
-      </Route>
-      <Route path='faq' element={<FAQPage />} />
-      <Route path='*' element={<Page404 />} /> {/* 404 роут */}
-    </Routes>
+    <Header />
+    <>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route
+          path='home'
+          element={
+            <ProtectedPage redirectTo={"/"}>
+              <Outlet />
+            </ProtectedPage>
+          }>
+          <Route index element={<ClientHomePage />} />
+          <Route path='personal-data' element={<PersonalData />} />
+        </Route>
+        <Route path='faq' element={<FAQPage />} />
+        <Route path='*' element={<Page404 />} /> {/* 404 роут */}
+      </Routes>
+    </>
+    <Footer />
   </BrowserRouter>,
   document.getElementById("root")
 );
