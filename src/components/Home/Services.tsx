@@ -27,9 +27,7 @@ export const Services: React.FC = () => {
                 <li>Разнообразные условия</li>
                 <li>Возможность ежемесячной капитализации или вывод процентов на банковскую карту</li>
               </ul>
-              <div>
-                <button className='button button-primary'>Узнать подробнее</button>
-              </div>
+              <button className='button button-primary'>Узнать подробнее</button>
             </div>
             <img src={PiggyBank} />
           </>

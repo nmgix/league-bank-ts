@@ -1,11 +1,11 @@
 @use "./external/fonts";
-
 $primary-main: "primary-main";
 $primary-lighter: "primary-lighter";
 $background-primary: "background-primary";
 $background-main: "background-main";
 $edging-main: "edging-main";
 $edging-secondary: "edging-secondary";
+$warning: "warning";
 
 $colors: (
   primary-main: #2c36f2,
@@ -14,6 +14,7 @@ $colors: (
   background-main: #ffffff,
   edging-main: #1f1e25,
   edging-secondary: #445362,
+  warning: rgb(212, 1, 1),
 );
 
 :root {
@@ -99,3 +100,8 @@ ul {
 .underline {
   text-decoration: underline;
 }
+
+// input[type=checkbox]:checked
+// {
+//     background: #409fd6 url("data:image/gif;base64,R0lGODlhCwAKAIABAP////3cnSH5BAEKAAEALAAAAAALAAoAAAIUjH+AC73WHIsw0UCjglraO20PNhYAOw==") 3px 3px no-repeat;
+// }
