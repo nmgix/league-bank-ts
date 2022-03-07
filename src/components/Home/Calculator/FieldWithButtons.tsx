@@ -1,7 +1,8 @@
 import React, { createRef, useState, useContext, useEffect } from "react";
 // import { Context } from "../Calculator";
 import { changeStateFunc, AvailableKeys } from "../../../interfaces/ICalculator";
-import { useGlobalContext } from "../Calculator";
+import { useAction } from "../../../redux/hooks/useAction";
+import { useTypedSelector } from "../../../redux/hooks/useTypedSelector";
 
 const FieldWithButtons: React.FC<{
   field: AvailableKeys;
@@ -17,14 +18,23 @@ const FieldWithButtons: React.FC<{
 
   const [fieldState, setFieldState] = useState<number>(defaultValue);
 
-  const { state, setState } = useGlobalContext();
+  const { state } = useTypedSelector((state) => state.calculator);
+  const { SetState } = useAction();
+
+  useEffect(() => {
+    if (!state || state[field] == null) {
+      SetState(field, defaultValue);
+    } else {
+      setFieldState(state[field]);
+    }
+  }, [state]);
 
   return (
     <div className='field-buttons' key={field}>
       <div className='main-input'>
         <button
           onClick={() => {
-            setState({ ...state, [field]: inputRef.current!.valueAsNumber - step });
+            SetState(field, inputRef.current!.valueAsNumber - step);
             setFieldState(inputRef.current!.valueAsNumber - step);
           }}>
           −
@@ -37,13 +47,13 @@ const FieldWithButtons: React.FC<{
           ref={inputRef}
           className={`field-input ${fieldState < min ? "error" : fieldState > max ? "error" : ""}`}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setState({ ...state, [field]: !isNaN(e.target.valueAsNumber) ? e.target.valueAsNumber : min });
+            SetState(field, !isNaN(e.target.valueAsNumber) ? e.target.valueAsNumber : min);
             setFieldState(!isNaN(e.target.valueAsNumber) ? e.target.valueAsNumber : min);
           }}
         />
         <button
           onClick={() => {
-            setState({ ...state, [field]: inputRef.current!.valueAsNumber + step });
+            SetState(field, inputRef.current!.valueAsNumber + step);
             setFieldState(inputRef.current!.valueAsNumber + step);
           }}>
           +

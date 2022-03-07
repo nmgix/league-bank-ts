@@ -12,26 +12,13 @@ import {
   AvailableKeys,
   changeStateFunc,
 } from "../../interfaces/ICalculator";
+import { useAction } from "../../redux/hooks/useAction";
+import { useTypedSelector } from "../../redux/hooks/useTypedSelector";
+import { translateText } from "../../redux/types/calcluatorType";
 import { FieldWithButtons } from "./Calculator/FieldWithButtons";
 import { FieldWithCheckbox } from "./Calculator/FieldWithCheckbox";
 import { FieldWithSlider } from "./Calculator/FieldWithSlider";
 import { Offer } from "./Calculator/Offer";
-
-enum idFromText {
-  "Ипотечное кредитование",
-  "Автомобильное кредитование",
-  "Потребительский кредит",
-}
-
-const CalculatorContext = React.createContext<ContextState>({
-  state: null,
-  setState: () => {},
-});
-export const useGlobalContext = () => useContext(CalculatorContext);
-
-//
-//
-//
 
 export const Calculator: React.FC = () => {
   const [calculatorState, setCalculatorState] = useState<ICalculator>({
@@ -39,7 +26,8 @@ export const Calculator: React.FC = () => {
     firstStep: null,
   });
 
-  const [ledningState, setLendingState] = useState<any>(null);
+  const { activeDropdown, firstStep } = useTypedSelector((state) => state.calculator);
+  const { SetDropdown, SetFirstStep } = useAction();
 
   const RenderCalculator: React.FC<{ state: ICalculator }> = ({ state }) => {
     const FrameComponent: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -54,7 +42,7 @@ export const Calculator: React.FC = () => {
     };
 
     switch (state.firstStep) {
-      case 0: {
+      case "mortgageLending": {
         return (
           <FrameComponent>
             <div className='field'>
@@ -94,7 +82,7 @@ export const Calculator: React.FC = () => {
           </FrameComponent>
         );
       }
-      case 1: {
+      case "carLending": {
         return (
           // <Context.Provider value={{ state: ledningState, setState: setLendingState }}>
           <FrameComponent>
@@ -103,7 +91,7 @@ export const Calculator: React.FC = () => {
           // </Context.Provider>
         );
       }
-      case 2: {
+      case "consumerLending": {
         return (
           // <Context.Provider value={{ state: ledningState, setState: setLendingState }}>
           <FrameComponent>
@@ -121,48 +109,55 @@ export const Calculator: React.FC = () => {
   return (
     // <CalculatorContext.Provider value={{ state: ledningState, setState: lendingStateChanger }}>
     <div id='calculate'>
-      <CalculatorContext.Provider value={{ state: ledningState, setState: setLendingState }}>
-        <h1>Кредитный калькулятор</h1>
-        <div className='calculator-wrapper'>
-          <div className='steps'>
-            <div className='first-step'>
-              <h4>Шаг 1. Цель кредита</h4>
-              <div className='dropdown-wrapper'>
-                <button
-                  className='button dropdown'
-                  style={{ borderRadius: `4px 4px ${calculatorState.activeDropdown ? "0px 0px" : "4px 4px"}` }}
-                  onClick={() =>
-                    setCalculatorState({ ...calculatorState, activeDropdown: !calculatorState.activeDropdown })
-                  }>
-                  {calculatorState.firstStep !== null ? idFromText[calculatorState.firstStep] : "Выберите цель кредита"}{" "}
-                  {calculatorState.activeDropdown ? (
-                    <img src={dropdownChevron} style={{ transform: "scale(-1, -1)" }} alt='dropdown chevron' />
-                  ) : (
-                    <img src={dropdownChevron} alt='dropdown chevron' />
-                  )}
-                </button>
-                {/* {calculatorState.activeDropdown ? ( */}
-                <ul style={{ height: "auto", display: calculatorState.activeDropdown ? "block" : "none" }}>
-                  <li onClick={() => setCalculatorState({ activeDropdown: false, firstStep: 0 })}>
-                    Ипотечное кредитование
-                  </li>
-                  <li onClick={() => setCalculatorState({ activeDropdown: false, firstStep: 1 })}>
-                    Автомобильное кредитование
-                  </li>
-                  <li onClick={() => setCalculatorState({ activeDropdown: false, firstStep: 2 })}>
-                    Потребительский кредит
-                  </li>
-                </ul>
-                {/* ) : (
+      <h1>Кредитный калькулятор</h1>
+      <div className='calculator-wrapper'>
+        <div className='steps'>
+          <div className='first-step'>
+            <h4>Шаг 1. Цель кредита</h4>
+            <div className='dropdown-wrapper'>
+              <button
+                className='button dropdown'
+                style={{ borderRadius: `4px 4px ${activeDropdown ? "0px 0px" : "4px 4px"}` }}
+                onClick={() => SetDropdown(!activeDropdown)}>
+                {firstStep !== null ? translateText[firstStep] : "Выберите цель кредита"}{" "}
+                {activeDropdown ? (
+                  <img src={dropdownChevron} style={{ transform: "scale(-1, -1)" }} alt='dropdown chevron' />
+                ) : (
+                  <img src={dropdownChevron} alt='dropdown chevron' />
+                )}
+              </button>
+              <ul style={{ height: "auto", display: activeDropdown ? "block" : "none" }}>
+                <li
+                  onClick={() => {
+                    SetDropdown(false);
+                    SetFirstStep("mortgageLending");
+                  }}>
+                  Ипотечное кредитование
+                </li>
+                <li
+                  onClick={() => {
+                    SetDropdown(false);
+                    SetFirstStep("carLending");
+                  }}>
+                  Автомобильное кредитование
+                </li>
+                <li
+                  onClick={() => {
+                    SetDropdown(false);
+                    SetFirstStep("consumerLending");
+                  }}>
+                  Потребительский кредит
+                </li>
+              </ul>
+              {/* ) : (
                 <></>
               )} */}
-              </div>
             </div>
-            <RenderCalculator state={calculatorState} />
           </div>
-          {calculatorState.firstStep !== null ? <Offer /> : <></>}
+          <RenderCalculator state={{ activeDropdown, firstStep }} />
         </div>
-      </CalculatorContext.Provider>
+        {firstStep !== null ? <Offer /> : <></>}
+      </div>
     </div>
   );
 };

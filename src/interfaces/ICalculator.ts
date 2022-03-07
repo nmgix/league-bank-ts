@@ -1,8 +1,9 @@
 import React, { Dispatch } from "react";
+import { FirstStep } from "../redux/types/calcluatorType";
 
 export interface ICalculator {
   activeDropdown: boolean;
-  firstStep: number | null;
+  firstStep: keyof typeof FirstStep | null;
 }
 
 export type IFields = {
@@ -14,26 +15,26 @@ export type IFieldsArray = {
   [x: string]: IFields;
 };
 
-export type MortgageLending = {
+export interface MortgageLending {
   estate_cost: number;
   initial_payment: number;
   loan_term: number;
   parent_capital: boolean;
-};
+}
 
-export type CarLending = {
+export interface CarLending {
   car_cost: number;
   initial_payment: number;
   loan_term: number;
   casko: boolean;
   insurance: boolean;
-};
+}
 
-export type ConsumerLending = {
+export interface ConsumerLending {
   consumer_loan_cost: number;
   loan_term: number;
   member: boolean;
-};
+}
 
 export type CalculatorsLending = MortgageLending | CarLending | ConsumerLending;
 

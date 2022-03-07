@@ -1,9 +1,6 @@
 import React from "react";
-import { useGlobalContext } from "../Calculator";
 
 export const Offer: React.FC = () => {
-  const { state, setState } = useGlobalContext();
-
   return (
     <div className='offer'>
       <h3>Наше предложение</h3>

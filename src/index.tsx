@@ -11,28 +11,32 @@ import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 
 import "./styles/main.scss";
+import { Provider } from "react-redux";
+import store from "./redux";
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Header />
-    <>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route
-          path='home'
-          element={
-            <ProtectedPage redirectTo={"/"}>
-              <Outlet />
-            </ProtectedPage>
-          }>
-          <Route index element={<ClientHomePage />} />
-          <Route path='personal-data' element={<PersonalData />} />
-        </Route>
-        <Route path='faq' element={<FAQPage />} />
-        <Route path='*' element={<Page404 />} /> {/* 404 роут */}
-      </Routes>
-    </>
-    <Footer />
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <Header />
+      <>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route
+            path='home'
+            element={
+              <ProtectedPage redirectTo={"/"}>
+                <Outlet />
+              </ProtectedPage>
+            }>
+            <Route index element={<ClientHomePage />} />
+            <Route path='personal-data' element={<PersonalData />} />
+          </Route>
+          <Route path='faq' element={<FAQPage />} />
+          <Route path='*' element={<Page404 />} /> {/* 404 роут */}
+        </Routes>
+      </>
+      <Footer />
+    </BrowserRouter>
+  </Provider>,
   document.getElementById("root")
 );

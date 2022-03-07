@@ -1,6 +1,7 @@
 import { useState, createRef, useEffect, useCallback } from "react";
 import { changeStateFunc, AvailableKeys } from "../../../interfaces/ICalculator";
-import { useGlobalContext } from "../Calculator";
+import { useAction } from "../../../redux/hooks/useAction";
+import { useTypedSelector } from "../../../redux/hooks/useTypedSelector";
 // import { useGlobalContext } from "../Calculator";
 
 const FieldWithSlider: React.FC<{
@@ -18,7 +19,16 @@ const FieldWithSlider: React.FC<{
   const [fieldState, setFieldState] = useState<number>(defaultValue);
   const [currentPercentage, setCurrentPercentage] = useState<number>((fieldState / min) * 10);
 
-  const { state, setState } = useGlobalContext();
+  const { state } = useTypedSelector((state) => state.calculator);
+  const { SetState } = useAction();
+
+  useEffect(() => {
+    if (!state || state[field] == null) {
+      SetState(field, defaultValue);
+    } else {
+      setFieldState(state[field]);
+    }
+  }, [state]);
 
   return (
     <div className='field-slider' key={field}>
@@ -30,8 +40,8 @@ const FieldWithSlider: React.FC<{
         className={`field-input ${fieldState < min ? "error" : fieldState > max ? "error" : ""}`}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setCurrentPercentage((e.target.valueAsNumber / min) * 10);
+          SetState(field, !isNaN(e.target.valueAsNumber) ? e.target.valueAsNumber : min);
           setFieldState(!isNaN(e.target.valueAsNumber) ? e.target.valueAsNumber : min);
-          setState({ ...state, [field]: !isNaN(e.target.valueAsNumber) ? e.target.valueAsNumber : min });
         }}
       />
       {fieldState < min ? minBoundError : <></>}
@@ -45,7 +55,7 @@ const FieldWithSlider: React.FC<{
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setCurrentPercentage((e.target.valueAsNumber / min) * 10);
           setFieldState(!isNaN(e.target.valueAsNumber) ? e.target.valueAsNumber : min);
-          setState({ ...state, [field]: !isNaN(e.target.valueAsNumber) ? e.target.valueAsNumber : min });
+          SetState(field, !isNaN(e.target.valueAsNumber) ? e.target.valueAsNumber : min);
         }}
       />
       <div className='range-help'>

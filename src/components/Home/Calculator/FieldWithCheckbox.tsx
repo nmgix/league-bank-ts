@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import Checkmark from "../../../images/checkmark.svg";
 import { changeStateFunc, AvailableKeys } from "../../../interfaces/ICalculator";
-import { useGlobalContext } from "../Calculator";
-// import { useGlobalContext } from "../Calculator";
+import { useAction } from "../../../redux/hooks/useAction";
+import { useTypedSelector } from "../../../redux/hooks/useTypedSelector";
 
 const FieldWithCheckbox: React.FC<{
   field: AvailableKeys;
@@ -11,7 +11,16 @@ const FieldWithCheckbox: React.FC<{
 }> = ({ field, defaultValue, label }) => {
   const [fieldState, setFieldState] = useState<boolean>(defaultValue);
 
-  const { state, setState } = useGlobalContext();
+  const { state } = useTypedSelector((state) => state.calculator);
+  const { SetState } = useAction();
+
+  useEffect(() => {
+    if (!state || state[field] == null) {
+      SetState(field, defaultValue);
+    } else {
+      setFieldState(state[field]);
+    }
+  }, [state]);
 
   return (
     <div className='field-checkbox' key={field}>
@@ -21,8 +30,7 @@ const FieldWithCheckbox: React.FC<{
           type={"checkbox"}
           checked={fieldState ? fieldState : defaultValue}
           onChange={() => {
-            // setState({ ...state, [field]: !fieldState });
-            setState({ ...state, [field]: !fieldState });
+            SetState(field, !fieldState);
             setFieldState(!fieldState);
           }}
         />
