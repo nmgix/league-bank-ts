@@ -14,20 +14,17 @@ import {
 } from "../../interfaces/ICalculator";
 import { useAction } from "../../redux/hooks/useAction";
 import { useTypedSelector } from "../../redux/hooks/useTypedSelector";
-import { translateText } from "../../redux/types/calcluatorType";
+import { FirstStep, translateText } from "../../redux/types/calcluatorType";
 import { FieldWithButtons } from "./Calculator/FieldWithButtons";
 import { FieldWithCheckbox } from "./Calculator/FieldWithCheckbox";
 import { FieldWithSlider } from "./Calculator/FieldWithSlider";
 import { Offer } from "./Calculator/Offer";
 
 export const Calculator: React.FC = () => {
-  const [calculatorState, setCalculatorState] = useState<ICalculator>({
-    activeDropdown: false,
-    firstStep: null,
-  });
-
-  const { activeDropdown, firstStep } = useTypedSelector((state) => state.calculator);
-  const { SetDropdown, SetFirstStep } = useAction();
+  // const { activeDropdown, firstStep } = useTypedSelector((state) => state.calculator);
+  // const { SetDropdown, SetFirstStep } = useAction();
+  const [activeDropdown, SetDropdown] = useState<boolean>(false);
+  const [firstStep, SetFirstStep] = useState<keyof typeof FirstStep | null>(null);
 
   const RenderCalculator: React.FC<{ state: ICalculator }> = ({ state }) => {
     const FrameComponent: React.FC<{ children: React.ReactNode }> = ({ children }) => {
