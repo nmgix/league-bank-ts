@@ -1,24 +1,201 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { CalculatorsLending, OurOffer } from "../../../interfaces/ICalculator";
+import { useAction } from "../../../redux/hooks/useAction";
+import { useTypedSelector } from "../../../redux/hooks/useTypedSelector";
+import { CalculationErrors, FirstStep } from "../../../redux/types/calcluatorType";
 
-export const Offer: React.FC = () => {
+export const Offer: React.FC<{ step: keyof typeof FirstStep }> = ({ step }) => {
+  const { state } = useTypedSelector((state) => state.calculator);
+  const [error, setError] = useState<keyof typeof CalculationErrors | null>(null);
+
+  const calculateLending = (state: CalculatorsLending, step: keyof typeof FirstStep): OurOffer => {
+    const resultState: OurOffer = {
+      loan_amount: null,
+      interest_rate: null,
+      monthly_payment: null,
+      required_income: null,
+    };
+
+    var tempState: { [x: string]: number | null } = {
+      procentRateMonth: null,
+      procentSum: null,
+    };
+
+    const getPayMonth = (cost: number, procRateMonth: number) => {
+      console.log(cost);
+
+      var countPeriods = state.loan_term * 12;
+      resultState.monthly_payment = Math.round(
+        cost * (procRateMonth / (1 - 1 / Math.pow(1 + procRateMonth, countPeriods)))
+      );
+      resultState.required_income = Math.round(resultState.monthly_payment / 0.45);
+    };
+
+    if (
+      (state.estate_cost !== (null || undefined) &&
+        state.initial_payment !== (null || undefined) &&
+        state.estate_cost === state.initial_payment) ||
+      state.estate_cost < state.initial_payment
+    ) {
+      if (error === null) {
+        setError(CalculationErrors.maxThersholdError);
+        return resultState;
+      }
+    } else {
+      if (error !== null) {
+        setError(null);
+      }
+    }
+
+    switch (step) {
+      case "mortgageLending": {
+        if (state.parent_capital) {
+          resultState.loan_amount = state.estate_cost - state.initial_payment - 470000;
+        } else {
+          resultState.loan_amount = state.estate_cost - state.initial_payment;
+        }
+
+        if ((state.initial_payment / state.estate_cost) * 100 >= 33) {
+          resultState.interest_rate = 8.5;
+          tempState.procRateMonth = 8.5 / 100 / 12;
+        } else {
+          resultState.interest_rate = 9.5;
+          tempState.procRateMonth = 9.4 / 100 / 12;
+        }
+
+        getPayMonth(resultState.loan_amount, tempState.procRateMonth);
+
+        return resultState;
+      }
+
+      case "carLending": {
+        resultState.loan_amount = state.car_cost - state.initial_payment;
+
+        if (state.casko && state.insurance) {
+          resultState.interest_rate = 3.5;
+          tempState.procRateMonth = 3.5 / 100 / 12;
+        } else if (state.casko || state.insurance) {
+          resultState.interest_rate = 8.5;
+          tempState.procRateMonth = 8.5 / 100 / 12;
+        } else if (state.car_cost >= 2000000) {
+          resultState.interest_rate = 15;
+          tempState.procRateMonth = 15 / 100 / 12;
+        } else {
+          resultState.interest_rate = 16;
+          tempState.procRateMonth = 16 / 100 / 12;
+        }
+
+        getPayMonth(resultState.loan_amount, tempState.procRateMonth);
+
+        return resultState;
+      }
+
+      case "consumerLending": {
+        resultState.loan_amount = state.consumer_loan_cost;
+
+        if (state.member) {
+          if (state.consumer_loan_cost >= 2000000) {
+            resultState.interest_rate = 9;
+            tempState.procRateMonth = 9 / 100 / 12;
+          } else if (state.consumer_loan_cost >= 750000 && state.consumer_loan_cost < 2000000) {
+            resultState.interest_rate = 12;
+            tempState.procRateMonth = 12 / 100 / 12;
+          } else {
+            resultState.interest_rate = 14.5;
+            tempState.procRateMonth = 14.5 / 100 / 12;
+          }
+        } else {
+          if (state.consumer_loan_cost >= 2000000) {
+            resultState.interest_rate = 9.5;
+            tempState.procRateMonth = 9.5 / 100 / 12;
+          } else if (state.consumer_loan_cost >= 750000 && state.consumer_loan_cost < 2000000) {
+            resultState.interest_rate = 12.5;
+            tempState.procRateMonth = 12.5 / 100 / 12;
+          } else {
+            resultState.interest_rate = 15;
+            tempState.procRateMonth = 15 / 100 / 12;
+          }
+        }
+
+        getPayMonth(resultState.loan_amount, tempState.procRateMonth);
+
+        return resultState;
+      }
+
+      default: {
+        return resultState;
+      }
+    }
+  };
+
+  const [calculationState, setState] = useState<OurOffer>(calculateLending(state!, step));
+
+  const { loan_amount, interest_rate, monthly_payment, required_income } = calculationState;
+
+  useEffect(() => {
+    setState(calculateLending(state!, step));
+  }, [state]);
+
+  if (error !== null) {
+    switch (error) {
+      case CalculationErrors.minThersholdError: {
+        return (
+          <div className='offer'>
+            <h3 className='offer-title'>
+              Наш банк не выдыет{" "}
+              {step === "mortgageLending" ? "ипотечные кредиты" : step === "carLending" ? "автокредиты" : "кредиты"}{" "}
+              меньше 200000 рублей
+            </h3>
+            <span className='error-text'>Попробуйте использовать другие параметры для расчета</span>
+          </div>
+        );
+      }
+      case CalculationErrors.maxThersholdError: {
+        return (
+          <div className='offer'>
+            <h3 className='offer-title'>
+              Наш банк не выдыет{" "}
+              {step === "mortgageLending" ? "ипотечные кредиты" : step === "carLending" ? "автокредиты" : "кредиты"}{" "}
+              больше 2500000{" "}
+              {/* здесь и в остальных таких же полях будет динамическая цифра, будет импортироваться из общего наверное енума либо объекта из родителя, из Calculator в Offer по соседству с step */}{" "}
+              рублей
+            </h3>
+            <span className='error-text'>Попробуйте использовать другие параметры для расчета</span>
+          </div>
+        );
+      }
+      default:
+        return (
+          <div className='offer'>
+            <h3 className='offer-title'>В рассчётах что-то пошло не так</h3>
+            <span className='error-text'>Попробуйте использовать другие параметры для расчета</span>
+          </div>
+        );
+    }
+  }
+
   return (
     <div className='offer'>
-      <h3>Наше предложение</h3>
-      <div>
-        <p></p>
-        <span>Сумма ипотеки</span>
-      </div>
-      <div>
-        <p></p>
-        <span>Процентная ставка</span>
-      </div>
-      <div>
-        <p></p>
-        <span>Ежемесячный платеж</span>
-      </div>
-      <div>
-        <p></p>
-        <span>Необходимый доход</span>
+      <h3 className='offer-title'>Наше предложение</h3>
+      <div className='calculation'>
+        <div>
+          <p>{loan_amount ? <>{loan_amount} рублей</> : <></>}</p>
+          <span>
+            Сумма {step === "mortgageLending" ? "ипотеки" : step === "carLending" ? "автокредита" : "кредита"}
+          </span>
+        </div>
+        <div>
+          <p>{interest_rate ? <>{interest_rate} %</> : <></>}</p>
+          <span>Процентная ставка</span>
+        </div>
+        <div>
+          <p>{monthly_payment ? <>{monthly_payment} рублей</> : <></>}</p>
+          <span>Ежемесячный платеж</span>
+        </div>
+        <div>
+          <p>{required_income ? <>{required_income} рублей</> : <></>}</p>
+          <span>Необходимый доход</span>
+        </div>
       </div>
       <button className='button button-primary'>Оформить заявку</button>
     </div>

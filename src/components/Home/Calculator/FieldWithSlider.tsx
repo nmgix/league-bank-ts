@@ -2,6 +2,7 @@ import { useState, createRef, useEffect, useCallback } from "react";
 import { changeStateFunc, AvailableKeys } from "../../../interfaces/ICalculator";
 import { useAction } from "../../../redux/hooks/useAction";
 import { useTypedSelector } from "../../../redux/hooks/useTypedSelector";
+import { CheckNumber } from "./FieldWithButtons";
 // import { useGlobalContext } from "../Calculator";
 
 const FieldWithSlider: React.FC<{
@@ -14,53 +15,103 @@ const FieldWithSlider: React.FC<{
   showStep?: boolean;
   minBoundError?: React.ReactNode;
   maxBoundError?: React.ReactNode;
+  dependencyMin?: AvailableKeys;
+  dependencyMax?: AvailableKeys;
   children?: React.ReactNode;
-}> = ({ children, field, step, defaultValue, min, max, minBoundError, maxBoundError, prefix, showStep }) => {
+}> = ({
+  children,
+  field,
+  step,
+  defaultValue,
+  min,
+  max,
+  minBoundError,
+  maxBoundError,
+  prefix,
+  showStep,
+  dependencyMin,
+  dependencyMax,
+}) => {
   const [fieldState, setFieldState] = useState<number>(defaultValue);
-  const [currentPercentage, setCurrentPercentage] = useState<number>((fieldState / min) * 10);
+  const [currentPercentage, setCurrentPercentage] = useState<number>(0);
+  const [minMax, setMinMax] = useState<{ min: number; max: number }>({
+    min,
+    max,
+  });
 
   const { state } = useTypedSelector((state) => state.calculator);
   const { SetState } = useAction();
+  useEffect(() => {
+    if (dependencyMin) {
+      setMinMax({ ...minMax, min: state[dependencyMin] });
+      setCurrentPercentage(
+        !isNaN(((state[field] - state[dependencyMin]) / (minMax.max - state[dependencyMin])) * 100)
+          ? ((state[field] - state[dependencyMin]) / (minMax.max - state[dependencyMin])) * 100
+          : 0
+      );
+    }
+    if (dependencyMax) {
+      setMinMax({ ...minMax, max: state[dependencyMax] });
+      setCurrentPercentage(
+        !isNaN(((state[field] - minMax.min) / (state[dependencyMax] - minMax.min)) * 100)
+          ? ((state[field] - minMax.min) / (state[dependencyMax] - minMax.min)) * 100
+          : 0
+      );
+    }
+  }, [state]);
 
   useEffect(() => {
     if (!state || state[field] == null) {
       SetState(field, defaultValue);
     } else {
       setFieldState(state[field]);
+      // setCurrentPercentage(
+      //   !isNaN(((state[field] - minMax.min) / (minMax.max - minMax.min)) * 100)
+      //     ? ((state[field] - minMax.min) / (minMax.max - minMax.min)) * 100
+      //     : 0
+      // );
     }
   }, [state]);
+
+  // пока что неправильно показывает процент, и то только если главный ипнут трогать (ну от которого этот сладйер зависит)
+  // если кнопки жать то всё ок, если писать число, то процент неправильно считается, но слайдер встаёт правильно
 
   return (
     <div className='field-slider' key={field}>
       <input
-        min={min}
-        max={max}
+        min={minMax.min}
+        max={minMax.max}
         type={"number"}
         value={fieldState}
-        className={`field-input ${fieldState < min ? "error" : fieldState > max ? "error" : ""}`}
+        className={`field-input ${fieldState < minMax.min ? "error" : fieldState > minMax.max ? "error" : ""}`}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          setCurrentPercentage((e.target.valueAsNumber / min) * 10);
-          SetState(field, !isNaN(e.target.valueAsNumber) ? e.target.valueAsNumber : min);
-          setFieldState(!isNaN(e.target.valueAsNumber) ? e.target.valueAsNumber : min);
+          CheckNumber(minMax.min, minMax.max, e.target.valueAsNumber, (value): void => {
+            setCurrentPercentage(((value - minMax.min) / (minMax.max - minMax.min)) * 100);
+            SetState(field, value);
+            setFieldState(value);
+          });
         }}
       />
-      {fieldState < min ? minBoundError : <></>}
-      {fieldState > max ? maxBoundError : <></>}
+      {fieldState < minMax.min ? minBoundError : <></>}
+      {fieldState > minMax.max ? maxBoundError : <></>}
       <input
         type={"range"}
-        min={min}
-        max={max}
+        min={minMax.min}
+        max={minMax.max}
         value={fieldState}
         step={step}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          setCurrentPercentage((e.target.valueAsNumber / min) * 10);
-          setFieldState(!isNaN(e.target.valueAsNumber) ? e.target.valueAsNumber : min);
-          SetState(field, !isNaN(e.target.valueAsNumber) ? e.target.valueAsNumber : min);
+          CheckNumber(minMax.min, minMax.max, e.target.valueAsNumber, (value): void => {
+            setCurrentPercentage(((value - minMax.min) / (minMax.max - minMax.min)) * 100);
+
+            SetState(field, value);
+            setFieldState(value);
+          });
         }}
       />
       <div className='range-help'>
         {showStep ? <div>{currentPercentage.toFixed(0)}%</div> : <span>{`${fieldState} ${prefix}`}</span>}
-        {showStep ? <></> : <span>{`${max} ${prefix}`}</span>}
+        {showStep ? <></> : <span>{`${minMax.max} ${prefix}`}</span>}
       </div>
       {children ? children : <></>}
     </div>

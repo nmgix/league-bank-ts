@@ -36,7 +36,7 @@ export interface ConsumerLending {
   member: boolean;
 }
 
-export type CalculatorsLending = MortgageLending | CarLending | ConsumerLending;
+export type CalculatorsLending = MortgageLending & CarLending & ConsumerLending;
 
 type KeysOfUnion<T> = T extends T ? keyof T : never;
 
@@ -51,3 +51,10 @@ export interface ContextState {
 
 export type changeStateFunc = (field: string, value: number | string | boolean) => void;
 // надо будет потом заменить number | string | boolean на что-то типа typeof CalculatorsLending[AvailableKeys]
+
+export interface OurOffer {
+  loan_amount: number | null;
+  interest_rate: number | null;
+  monthly_payment: number | null;
+  required_income: number | null;
+}

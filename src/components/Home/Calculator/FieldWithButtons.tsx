@@ -3,6 +3,26 @@ import React, { createRef, useState, useContext, useEffect } from "react";
 import { changeStateFunc, AvailableKeys } from "../../../interfaces/ICalculator";
 import { useAction } from "../../../redux/hooks/useAction";
 import { useTypedSelector } from "../../../redux/hooks/useTypedSelector";
+import { FirstStep } from "../../../redux/types/calcluatorType";
+
+export const CheckNumber = (min: number, max: number, value: number, callback: (value: number) => void) => {
+  if (value < min) {
+    return callback(min);
+  }
+  if (value > max) {
+    return callback(max);
+  }
+  if (!isNaN(value)) {
+    return callback(value);
+  } else {
+    var middle = (min + max) / 2;
+    if (value > middle) {
+      return callback(max);
+    } else {
+      return callback(min);
+    }
+  }
+};
 
 const FieldWithButtons: React.FC<{
   field: AvailableKeys;
@@ -12,10 +32,21 @@ const FieldWithButtons: React.FC<{
   max: number;
   minBoundError: React.ReactNode;
   maxBoundError: React.ReactNode;
+  dependencyMin?: AvailableKeys;
+  dependencyMax?: AvailableKeys;
   children?: React.ReactNode;
-}> = ({ children, field, step, defaultValue, min, max, minBoundError, maxBoundError }) => {
-  const inputRef = createRef<HTMLInputElement>();
-
+}> = ({
+  children,
+  field,
+  step,
+  defaultValue,
+  min,
+  max,
+  minBoundError,
+  maxBoundError,
+  dependencyMin,
+  dependencyMax,
+}) => {
   const [fieldState, setFieldState] = useState<number>(defaultValue);
 
   const { state } = useTypedSelector((state) => state.calculator);
@@ -29,13 +60,27 @@ const FieldWithButtons: React.FC<{
     }
   }, [state]);
 
+  useEffect(() => {
+    if (dependencyMin) {
+      min = state[dependencyMin];
+    }
+    if (dependencyMax) {
+      max = state[dependencyMax];
+    }
+  }, [state]);
+
   return (
     <div className='field-buttons' key={field}>
       <div className='main-input'>
         <button
           onClick={() => {
-            SetState(field, inputRef.current!.valueAsNumber - step);
-            setFieldState(inputRef.current!.valueAsNumber - step);
+            if (fieldState <= min) {
+              return;
+            }
+            CheckNumber(min, max, fieldState, (value): void => {
+              SetState(field, value - step);
+              setFieldState(value - step);
+            });
           }}>
           −
         </button>
@@ -44,17 +89,23 @@ const FieldWithButtons: React.FC<{
           max={max}
           type={"number"}
           value={fieldState}
-          ref={inputRef}
           className={`field-input ${fieldState < min ? "error" : fieldState > max ? "error" : ""}`}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            SetState(field, !isNaN(e.target.valueAsNumber) ? e.target.valueAsNumber : min);
-            setFieldState(!isNaN(e.target.valueAsNumber) ? e.target.valueAsNumber : min);
+            CheckNumber(min, max, e.target.valueAsNumber, (value): void => {
+              SetState(field, value);
+              setFieldState(value);
+            });
           }}
         />
         <button
           onClick={() => {
-            SetState(field, inputRef.current!.valueAsNumber + step);
-            setFieldState(inputRef.current!.valueAsNumber + step);
+            if (fieldState >= max) {
+              return;
+            }
+            CheckNumber(min, max, fieldState, (value): void => {
+              SetState(field, value + step);
+              setFieldState(value + step);
+            });
           }}>
           +
         </button>
