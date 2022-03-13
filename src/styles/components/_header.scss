@@ -1,4 +1,4 @@
-@use "../base" as colors;
+@import "../base";
 
 .logo {
   width: 150px;
@@ -15,6 +15,13 @@
     margin-right: 11px;
     font-weight: 700;
     font-size: 20px;
+
+    @media screen and (max-width: $tablet-width) {
+      & {
+        margin-right: 30px;
+        font-size: 16px;
+      }
+    }
   }
 }
 
@@ -22,12 +29,68 @@ header {
   width: 100%;
   height: 90px;
 
+  @media screen and (max-width: $tablet-width) {
+    & {
+      height: 65px;
+      position: fixed;
+      z-index: 3;
+      background-color: color($background-main);
+    }
+  }
+
+  .login-button {
+    padding: 0;
+    width: 210px;
+    border: none;
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+
+    display: flex;
+    justify-content: space-around;
+    svg {
+      width: 20px;
+      height: 22px;
+    }
+
+    align-items: center;
+    background-color: color($background-main);
+    cursor: pointer;
+
+    &:hover {
+      background-color: color($background-main);
+      opacity: 0.7;
+    }
+
+    @media screen and (max-width: $tablet-width) {
+      & {
+        justify-content: flex-end;
+        width: 70px;
+      }
+
+      .help-text {
+        display: none;
+      }
+    }
+  }
+
   .container {
     max-width: 1366px;
-    min-width: 1024px;
+    min-width: $tablet-width;
     width: 100%;
     height: 100%;
     margin: 0 auto;
+
+    @media screen and (max-width: $tablet-width) {
+      & {
+        min-width: $mobile-width;
+      }
+    }
+
+    @media screen and (max-width: $mobile-width) {
+      & {
+        min-width: 560px;
+      }
+    }
 
     .wrapper {
       outline: 1px solid #c0ffef;
@@ -49,30 +112,103 @@ header {
         li:not(:last-child) {
           margin-right: 26px;
         }
+
+        @media screen and (max-width: $tablet-width) {
+          & {
+            margin-left: 0;
+            width: auto;
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  .burger-menu,
+  .close-cross {
+    .line {
+      width: 23px;
+      height: 3px;
+      background-color: #1f1e25;
+      display: block;
+      margin: 3px auto;
+    }
+    cursor: pointer;
+  }
+
+  .burger-menu {
+    display: none;
+
+    @media screen and (max-width: $tablet-width) {
+      & {
+        display: block;
+      }
+    }
+  }
+
+  .close-cross {
+    position: relative;
+    width: 25px;
+    height: 25px;
+
+    & > * {
+      position: absolute;
+      top: 8px;
+      left: 1px;
+    }
+
+    .line:nth-child(1) {
+      transform: rotate(45deg);
+    }
+
+    .line:nth-child(2) {
+      transform: rotate(135deg);
+    }
+  }
+
+  nav {
+    position: absolute;
+    width: auto;
+    height: auto;
+
+    display: none;
+
+    top: 0;
+    left: 0;
+
+    background: color($background-main);
+    padding: 20px 35px;
+
+    z-index: 3;
+
+    ul {
+      margin: 15px 0 0 0;
+
+      li {
+        font-size: 18px;
       }
 
-      & .login-button {
-        padding: 0;
-        width: 210px;
-        border: none;
-        font-size: 16px;
-        font-family: "Roboto", sans-serif;
+      li:not(:last-child) {
+        margin-bottom: 5px;
+      }
+    }
 
-        display: flex;
-        justify-content: space-around;
-        svg {
-          width: 20px;
-          height: 22px;
-        }
+    // .login-button {
+    //   width: 100%;
 
-        align-items: center;
-        background-color: colors.color(colors.$background-main);
-        cursor: pointer;
+    //   span {
+    //     margin-left: 5px;
+    //     width: 100%;
+    //   }
+    // }
+  }
 
-        &:hover {
-          background-color: colors.color(colors.$background-main);
-          opacity: 0.7;
-        }
+  .nav-active {
+    display: block;
+
+    @media screen and (min-width: $tablet-width) {
+      & {
+        display: none;
       }
     }
   }

@@ -10,7 +10,7 @@ import { FieldWithCheckbox } from "./Calculator/FieldWithCheckbox";
 import { FieldWithSlider } from "./Calculator/FieldWithSlider";
 import { Offer } from "./Calculator/Offer";
 
-export const Calculator: React.FC = () => {
+export const Calculator: React.FC<{ id: string }> = ({ id }) => {
   // const { activeDropdown, firstStep } = useTypedSelector((state) => state.calculator);
   const { SetState } = useAction();
   const [activeDropdown, SetDropdown] = useState<boolean>(false);
@@ -165,7 +165,7 @@ export const Calculator: React.FC = () => {
 
   return (
     // <CalculatorContext.Provider value={{ state: ledningState, setState: lendingStateChanger }}>
-    <div id='calculate'>
+    <div id={id}>
       <h1>Кредитный калькулятор</h1>
       <div className='calculator-wrapper'>
         <div className='steps'>
@@ -178,9 +178,14 @@ export const Calculator: React.FC = () => {
                 onClick={() => SetDropdown(!activeDropdown)}>
                 {firstStep !== null ? translateText[firstStep] : "Выберите цель кредита"}{" "}
                 {activeDropdown ? (
-                  <img src={dropdownChevron} style={{ transform: "scale(-1, -1)" }} alt='dropdown chevron' />
+                  <img
+                    src={dropdownChevron}
+                    style={{ transform: "scale(-1, -1)" }}
+                    alt='dropdown chevron'
+                    draggable='false'
+                  />
                 ) : (
-                  <img src={dropdownChevron} alt='dropdown chevron' />
+                  <img src={dropdownChevron} alt='dropdown chevron' draggable='false' />
                 )}
               </button>
               <ul style={{ height: "auto", display: activeDropdown ? "block" : "none" }}>

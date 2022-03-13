@@ -52,5 +52,6 @@ export type CalculatorActions = /*SetDropdown | SetFirstStep |*/ SetState | SetE
 export enum CalculationErrors {
   minThersholdError = "minThersholdError",
   maxThersholdError = "maxThersholdError",
+  threshold = "threshold",
   default = "default",
 }

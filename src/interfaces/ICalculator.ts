@@ -38,7 +38,7 @@ export interface ConsumerLending {
 
 export type CalculatorsLending = MortgageLending & CarLending & ConsumerLending;
 
-type KeysOfUnion<T> = T extends T ? keyof T : never;
+export type KeysOfUnion<T> = T extends T ? keyof T : never;
 
 export type AvailableKeys = KeysOfUnion<CalculatorsLending>;
 

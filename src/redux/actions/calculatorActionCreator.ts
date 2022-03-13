@@ -1,4 +1,3 @@
-import { Dispatch } from "redux";
 import { AvailableKeys, CalculatorsLending } from "../../interfaces/ICalculator";
 import { CalculatorActions, CalculatorTypes, FirstStep } from "../types/calcluatorType";
 

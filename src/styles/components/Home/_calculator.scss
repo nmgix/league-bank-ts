@@ -1,9 +1,15 @@
-@use "../../base" as colors;
+@import "../../base";
 
 #calculate {
   width: 100%;
   height: auto;
-  background-color: colors.color(colors.$background-main);
+  background-color: color($background-main);
+
+  @media screen and (max-width: $tablet-width) {
+    & {
+      width: auto;
+    }
+  }
 
   h1 {
     margin-bottom: 60px;
@@ -13,8 +19,8 @@
 
   .dropdown {
     width: 100%;
-    border: 1px solid colors.color(colors.$edging-main);
-    background-color: colors.color(colors.$background-main);
+    border: 1px solid color($edging-main);
+    background-color: color($background-main);
     img {
       position: absolute;
       top: 40%;
@@ -50,13 +56,13 @@
 
     ul {
       height: 0;
-      border: 1px solid colors.color(colors.$edging-main);
+      border: 1px solid color($edging-main);
       border-top: none;
       border-radius: 0 0 4px 4px;
 
       position: absolute;
       width: calc(100% - 2px);
-      background-color: colors.color(colors.$background-main);
+      background-color: color($background-main);
       z-index: 3;
 
       li {
@@ -73,6 +79,21 @@
   .calculator-wrapper {
     display: flex;
     justify-content: space-between;
+
+    @media (max-width: $tablet-width) {
+      margin-top: 70px;
+      flex-direction: column;
+
+      & > * {
+        flex: 1;
+        width: 100% !important;
+      }
+    }
+
+    @media (max-width: $mobile-width) {
+      // min-height: 492px;
+      margin-top: 55px;
+    }
 
     .steps {
       .first-step {
@@ -93,7 +114,7 @@
 
         .field-error {
           font-size: 14px;
-          color: colors.color(colors.$warning);
+          color: color($warning);
           margin-top: 8px;
         }
 
@@ -111,7 +132,7 @@
               border: none;
               cursor: pointer;
 
-              color: colors.color(colors.$edging-main);
+              color: color($edging-main);
               line-height: 55px;
               font-size: 32px;
 
@@ -149,7 +170,7 @@
               height: 14px;
               width: 14px;
               border-radius: 10px;
-              background: colors.color(colors.$primary-main);
+              background: color($primary-main);
               cursor: pointer;
               -webkit-appearance: none;
               margin-top: -7px;
@@ -167,7 +188,7 @@
               height: 14px;
               width: 14px;
               border-radius: 10px;
-              background: colors.color(colors.$primary-main);
+              background: color($primary-main);
               cursor: pointer;
             }
             &::-ms-track {
@@ -189,7 +210,7 @@
               height: 14px;
               width: 14px;
               border-radius: 10px;
-              background: colors.color(colors.$primary-main);
+              background: color($primary-main);
               cursor: pointer;
             }
             &:focus::-ms-fill-lower {
@@ -214,17 +235,17 @@
           input[type="number"] {
             width: calc(100% - 2px);
             height: 60px;
-            border: 1px solid colors.color(colors.$edging-main);
+            border: 1px solid color($edging-main);
             border-radius: 4px;
             text-align: center;
-            background-color: colors.color(colors.$background-main);
+            background-color: color($background-main);
             appearance: textfield;
             font-family: "Roboto", sans-serif;
-            color: colors.color(colors.$edging-main);
+            color: color($edging-main);
             font-size: 16px;
 
             &:focus {
-              border: 1px solid colors.color(colors.$edging-main);
+              border: 1px solid color($edging-main);
               //   outline: none !important;
             }
           }
@@ -235,17 +256,7 @@
           }
 
           .error {
-            border: 1px solid colors.color(colors.$warning) !important;
-          }
-        }
-
-        .field-checkbox {
-          label {
-            cursor: pointer;
-
-            input {
-              margin-right: 8px;
-            }
+            border: 1px solid color($warning) !important;
           }
         }
       }
@@ -266,7 +277,14 @@
 
       padding: 48px 53px 58px 60px;
 
-      background: colors.color(colors.$background-primary);
+      background: color($background-primary);
+
+      @media screen and (max-width: $tablet-width) {
+        & {
+          width: auto !important;
+          padding: 48px 50px 0;
+        }
+      }
 
       .offer-title {
         font-weight: 500;
@@ -289,6 +307,10 @@
             font-size: 22px;
             font-weight: 500;
             margin-bottom: 7px;
+          }
+
+          span {
+            opacity: 0.8;
           }
         }
       }

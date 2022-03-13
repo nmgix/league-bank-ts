@@ -1,0 +1,27 @@
+@import "../../base";
+
+#map {
+  h1 {
+    margin-bottom: 60px;
+    font-size: 41px;
+    font-weight: 700;
+  }
+
+  .checkboxes {
+    width: 30%;
+
+    margin: 0 auto;
+    ul {
+      height: 82px;
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    @media screen and (max-width: $tablet-width) {
+      & {
+        width: 50%;
+      }
+    }
+  }
+}

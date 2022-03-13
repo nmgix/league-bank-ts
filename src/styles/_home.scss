@@ -5,13 +5,34 @@
 @use "./components/Home/calculator";
 @use "./components/Home/map";
 
+@import "./base";
 .main-wrapper {
   width: 100%;
   height: auto;
+
+  @media screen and (max-width: $tablet-width) {
+    & {
+      margin-top: 65px;
+    }
+  }
 }
 
 .main-content {
   width: 100%;
   // background-color: rgb(100, 100, 100);
-  height: 140vh;
+  min-height: 140vh;
+
+  & > *:not(:last-child) {
+    margin-bottom: 130px;
+  }
+
+  @media screen and (max-width: $laptop-width) {
+    #services {
+      margin-bottom: 80px;
+    }
+
+    & > *:not(#services) {
+      padding: 0 30px;
+    }
+  }
 }

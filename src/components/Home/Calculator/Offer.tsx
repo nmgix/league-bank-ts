@@ -22,30 +22,12 @@ export const Offer: React.FC<{ step: keyof typeof FirstStep }> = ({ step }) => {
     };
 
     const getPayMonth = (cost: number, procRateMonth: number) => {
-      console.log(cost);
-
       var countPeriods = state.loan_term * 12;
       resultState.monthly_payment = Math.round(
         cost * (procRateMonth / (1 - 1 / Math.pow(1 + procRateMonth, countPeriods)))
       );
       resultState.required_income = Math.round(resultState.monthly_payment / 0.45);
     };
-
-    if (
-      (state.estate_cost !== (null || undefined) &&
-        state.initial_payment !== (null || undefined) &&
-        state.estate_cost === state.initial_payment) ||
-      state.estate_cost < state.initial_payment
-    ) {
-      if (error === null) {
-        setError(CalculationErrors.maxThersholdError);
-        return resultState;
-      }
-    } else {
-      if (error !== null) {
-        setError(null);
-      }
-    }
 
     switch (step) {
       case "mortgageLending": {
@@ -133,6 +115,36 @@ export const Offer: React.FC<{ step: keyof typeof FirstStep }> = ({ step }) => {
   const { loan_amount, interest_rate, monthly_payment, required_income } = calculationState;
 
   useEffect(() => {
+    if (state.estate_cost && state.initial_payment) {
+      if (state.estate_cost <= state.initial_payment) {
+        if (error === null) {
+          setError(CalculationErrors.threshold);
+          return setState(state);
+        }
+      } else if (state.estate_cost - state.initial_payment - 470000 <= 0 && state.parent_capital === true) {
+        if (error === null) {
+          setError(CalculationErrors.threshold);
+          return setState(state);
+        }
+      } else {
+        if (error !== null) {
+          setError(null);
+        }
+      }
+    }
+
+    if (state.car_cost && state.initial_payment) {
+      if (state.car_cost <= state.initial_payment) {
+        if (error === null) {
+          setError(CalculationErrors.threshold);
+          return setState(state);
+        }
+      } else {
+        if (error !== null) {
+          setError(null);
+        }
+      }
+    }
     setState(calculateLending(state!, step));
   }, [state]);
 
@@ -161,6 +173,22 @@ export const Offer: React.FC<{ step: keyof typeof FirstStep }> = ({ step }) => {
               рублей
             </h3>
             <span className='error-text'>Попробуйте использовать другие параметры для расчета</span>
+          </div>
+        );
+      }
+      case CalculationErrors.threshold: {
+        return (
+          <div className='offer'>
+            <h3 className='offer-title'>Перейден порог оплаты</h3>
+            <span className='error-text'>
+              Первым возносом{" "}
+              {state.estate_cost - state.initial_payment && state.parent_capital > 0 ? (
+                <span>и материнским капиталом</span>
+              ) : (
+                <></>
+              )}{" "}
+              вы закрываете кредит
+            </span>
           </div>
         );
       }

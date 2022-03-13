@@ -17,6 +17,10 @@ $colors: (
   warning: rgb(212, 1, 1),
 );
 
+$laptop-width: 1366px;
+$tablet-width: 1023px;
+$mobile-width: 767px;
+
 :root {
   @each $key, $value in $colors {
     --color-#{$key}: #{$value};
@@ -43,6 +47,7 @@ body {
   color: color($edging-main);
   font-size: 16px;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 a,
@@ -74,7 +79,7 @@ ul {
 
 .button {
   cursor: pointer;
-  padding: 13px 30px;
+  padding: 15px 30px;
   border-radius: 4px;
 
   font-family: "Roboto", sans-serif;
@@ -93,12 +98,33 @@ ul {
   }
 }
 
+.button-primary-inv {
+  background-color: color($background-main);
+  color: color($edging-main);
+  border: 1px solid color($background-main);
+
+  &:hover {
+    background-color: color($primary-main);
+    color: color($background-main);
+  }
+}
+
 .link {
   font-weight: 600;
 }
 
 .underline {
   text-decoration: underline;
+}
+
+.field-checkbox {
+  label {
+    cursor: pointer;
+
+    input {
+      margin-right: 8px;
+    }
+  }
 }
 
 // input[type=checkbox]:checked
