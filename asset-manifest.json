@@ -1,0 +1,36 @@
+{
+  "files": {
+    "main.css": "/league-bank-ts/static/css/main.7abc4cb5.css",
+    "main.js": "/league-bank-ts/static/js/main.b5f39223.js",
+    "static/media/slider-card.jpg": "/league-bank-ts/static/media/slider-card.1bacda94dd1eb4107b76.jpg",
+    "static/media/car.webp": "/league-bank-ts/static/media/car.5ca9881abfc1a7d4440c.webp",
+    "static/media/woman.webp": "/league-bank-ts/static/media/woman.630625322210ed609e85.webp",
+    "static/media/man.webp": "/league-bank-ts/static/media/man.bc620ccfffdc39e8c9ca.webp",
+    "static/media/cards.webp": "/league-bank-ts/static/media/cards.b2732acd35cddc49b12e.webp",
+    "static/media/lock.webp": "/league-bank-ts/static/media/lock.46b47d2a0268cc9018f0.webp",
+    "static/media/piggybank.webp": "/league-bank-ts/static/media/piggybank.dbea84e496322cb1c785.webp",
+    "static/media/mobile.webp": "/league-bank-ts/static/media/mobile.063aef036c4f7ac31f38.webp",
+    "static/media/icon-ig.svg": "/league-bank-ts/static/media/icon-ig.5c584ac1feaf10f4bdb4941545e7eda2.svg",
+    "index.html": "/league-bank-ts/index.html",
+    "static/media/location.svg": "/league-bank-ts/static/media/location.7583df0fc4bd685ef341d6177ff5b6f9.svg",
+    "static/media/cards.svg": "/league-bank-ts/static/media/cards.8d021774fdc1d6aeb5e66ec611d88911.svg",
+    "static/media/icon-twitter.svg": "/league-bank-ts/static/media/icon-twitter.03c29072cbbc72f342c7be4de3ae1192.svg",
+    "static/media/icon-phone.svg": "/league-bank-ts/static/media/icon-phone.c7111759c67648e8275e22b2e2ad4af3.svg",
+    "static/media/icon-logo.svg": "/league-bank-ts/static/media/icon-logo.9d8247f4ea2d2f1e112a206d17e89ea0.svg",
+    "static/media/phone.svg": "/league-bank-ts/static/media/phone.1d7bf0fc73e488f51a348b9bcac43790.svg",
+    "static/media/icon-mobile.svg": "/league-bank-ts/static/media/icon-mobile.9b05b66ddadd056e6f62593b192c5d79.svg",
+    "static/media/icon-enter.svg": "/league-bank-ts/static/media/icon-enter.5598d863c229325dcb95c9c687658582.svg",
+    "static/media/icon-youtube.svg": "/league-bank-ts/static/media/icon-youtube.674ac4e8e4189edc27401f0fd8c7d83b.svg",
+    "static/media/vault.svg": "/league-bank-ts/static/media/vault.41f64a470817af21985a7281a93a6931.svg",
+    "static/media/security.svg": "/league-bank-ts/static/media/security.acaeefe1b7517f637242efdf67dfd30b.svg",
+    "static/media/icon-fb.svg": "/league-bank-ts/static/media/icon-fb.80b4dbdd0cfc98aba1aa880cf71c2e64.svg",
+    "static/media/checkmark.svg": "/league-bank-ts/static/media/checkmark.f96b3f05ad9afabe4c7b613d98ed6bcf.svg",
+    "static/media/selection-arrow.svg": "/league-bank-ts/static/media/selection-arrow.839f9c06348136e2c32a21e0ffe815db.svg",
+    "main.7abc4cb5.css.map": "/league-bank-ts/static/css/main.7abc4cb5.css.map",
+    "main.b5f39223.js.map": "/league-bank-ts/static/js/main.b5f39223.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7abc4cb5.css",
+    "static/js/main.b5f39223.js"
+  ]
+}
