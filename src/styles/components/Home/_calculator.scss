@@ -11,12 +11,6 @@
     }
   }
 
-  h1 {
-    margin-bottom: 60px;
-    font-size: 41px;
-    font-weight: 700;
-  }
-
   .dropdown {
     width: 100%;
     border: 1px solid color($edging-main);
@@ -24,7 +18,7 @@
     img {
       position: absolute;
       top: 40%;
-      left: 93%;
+      right: 3%;
     }
   }
   .help-text {
@@ -92,7 +86,7 @@
 
     @media (max-width: $mobile-width) {
       // min-height: 492px;
-      margin-top: 55px;
+      margin-top: 30px;
     }
 
     .steps {

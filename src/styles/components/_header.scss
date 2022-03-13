@@ -6,6 +6,12 @@
   display: flex;
   align-items: center;
 
+  @media screen and (max-width: $mobile-width) {
+    & {
+      width: 115px;
+    }
+  }
+
   svg {
     width: 28px;
     height: 25px;
@@ -20,6 +26,12 @@
       & {
         margin-right: 30px;
         font-size: 16px;
+      }
+    }
+
+    @media screen and (max-width: $mobile-width) {
+      & {
+        margin-right: 0;
       }
     }
   }
@@ -71,6 +83,12 @@ header {
         display: none;
       }
     }
+
+    @media screen and (max-width: $mobile-width) {
+      & {
+        width: auto;
+      }
+    }
   }
 
   .container {
@@ -88,9 +106,15 @@ header {
 
     @media screen and (max-width: $mobile-width) {
       & {
-        min-width: 560px;
+        min-width: $small-mobile-width;
       }
     }
+
+    // @media screen and (max-width: $small-mobile-width) {
+    //   & {
+    //     min-width: 560px;
+    //   }
+    // }
 
     .wrapper {
       outline: 1px solid #c0ffef;

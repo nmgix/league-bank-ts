@@ -5,6 +5,12 @@
   height: 400px;
   background-color: color($background-main);
 
+  @media screen and (max-width: $mobile-width) {
+    & {
+      height: 300px;
+    }
+  }
+
   .swiper-container,
   .swiper-wrapper,
   .slide-wrapper,
@@ -26,6 +32,7 @@
   }
 
   .slide-wrapper {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -64,6 +71,19 @@
             font-size: 17px;
           }
         }
+      }
+    }
+
+    @media screen and (max-width: $mobile-width) {
+      div {
+        z-index: 2;
+        margin-left: 20px;
+      }
+
+      img {
+        z-index: 1;
+        position: absolute;
+        right: -130px;
       }
     }
   }

@@ -6,6 +6,13 @@ footer {
   margin: 100px auto 0 auto;
   padding: 60px 0;
 
+  @media screen and (max-width: $mobile-width) {
+    & {
+      margin-top: 0 !important;
+      padding-bottom: 10px;
+    }
+  }
+
   svg {
     width: 16px;
     height: 16px;
@@ -23,6 +30,17 @@ footer {
 
       & > *:not(:last-child) {
         margin-bottom: 20px;
+      }
+    }
+
+    @media screen and (max-width: $mobile-width) {
+      & {
+        flex-direction: column-reverse;
+      }
+
+      & > * {
+        width: 90% !important;
+        margin: 0 auto;
       }
     }
 
@@ -80,6 +98,13 @@ footer {
         font-size: 12px;
         line-height: 17px;
       }
+
+      @media screen and (max-width: $mobile-width) {
+        & {
+          padding-left: calc(11px + 35px) !important;
+          width: 90% !important;
+        }
+      }
     }
 
     .social {
@@ -91,6 +116,12 @@ footer {
           & {
             height: 26px;
             align-items: center;
+          }
+        }
+
+        @media screen and (max-width: $mobile-width) {
+          & {
+            margin-bottom: 35px;
           }
         }
       }

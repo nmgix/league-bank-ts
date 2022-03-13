@@ -92,7 +92,7 @@ export const Home: React.FC = () => {
         <div>
           <p>
             Рассчитайте ежемесячный платеж и ставку по кредиту воспользовавшись нашим{" "}
-            <a href='#calculator' className='link underline' onClick={() => navigateTo("calculate")}>
+            <a className='link underline' onClick={() => navigateTo("calculate")}>
               кредитным калькулятором
             </a>
           </p>

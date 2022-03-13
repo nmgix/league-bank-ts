@@ -20,6 +20,7 @@ $colors: (
 $laptop-width: 1366px;
 $tablet-width: 1023px;
 $mobile-width: 767px;
+$small-mobile-width: 360px;
 
 :root {
   @each $key, $value in $colors {
@@ -93,7 +94,7 @@ ul {
   border: 1px solid color($primary-main);
 
   &:hover {
-    background-color: color($background-main);
+    background-color: transparent;
     color: color($primary-main);
   }
 }
@@ -104,7 +105,7 @@ ul {
   border: 1px solid color($background-main);
 
   &:hover {
-    background-color: color($primary-main);
+    background-color: transparent;
     color: color($background-main);
   }
 }

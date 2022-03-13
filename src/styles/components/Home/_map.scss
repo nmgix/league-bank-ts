@@ -1,12 +1,6 @@
 @import "../../base";
 
 #map {
-  h1 {
-    margin-bottom: 60px;
-    font-size: 41px;
-    font-weight: 700;
-  }
-
   .checkboxes {
     width: 30%;
 
@@ -21,6 +15,12 @@
     @media screen and (max-width: $tablet-width) {
       & {
         width: 50%;
+      }
+    }
+
+    @media screen and (max-width: $mobile-width) {
+      & {
+        width: 90%;
       }
     }
   }

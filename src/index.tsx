@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import { Routes, Route, BrowserRouter, Outlet } from "react-router-dom";
+import { Routes, Route, BrowserRouter, Outlet, HashRouter } from "react-router-dom";
 import { ClientHomePage } from "./pages/Client/ClientHomePage";
 import { PersonalData } from "./pages/Client/PersonalData";
 import { FAQPage } from "./pages/FAQPage";
@@ -16,7 +16,7 @@ import store from "./redux";
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <HashRouter>
       <Header />
       <>
         <Routes>
@@ -36,7 +36,7 @@ ReactDOM.render(
         </Routes>
       </>
       <Footer />
-    </BrowserRouter>
+    </HashRouter>
   </Provider>,
   document.getElementById("root")
 );

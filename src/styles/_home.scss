@@ -26,6 +26,27 @@
     margin-bottom: 130px;
   }
 
+  @media screen and (max-width: $mobile-width) {
+    & > *:not(:last-child) {
+      margin-bottom: 70px;
+    }
+  }
+
+  #calculate,
+  #map {
+    h1 {
+      margin-bottom: 60px;
+      font-size: 41px;
+      font-weight: 700;
+
+      @media screen and (max-width: $mobile-width) {
+        & {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
   @media screen and (max-width: $laptop-width) {
     #services {
       margin-bottom: 80px;
