@@ -130,6 +130,8 @@
               line-height: 55px;
               font-size: 32px;
 
+              background-color: transparent !important;
+
               &:focus {
                 outline: none !important;
               }
@@ -267,7 +269,8 @@
     .offer {
       width: 33%;
       // min-height: 389px;
-      margin-top: 10px;
+      height: 100%;
+      margin-top: 25px;
 
       padding: 48px 53px 58px 60px;
 
@@ -276,7 +279,7 @@
       @media screen and (max-width: $tablet-width) {
         & {
           width: auto !important;
-          padding: 48px 50px 0;
+          padding: 48px 0;
         }
       }
 
@@ -291,11 +294,24 @@
         display: flex;
         flex-wrap: wrap;
 
+        @media screen and (max-width: $mobile-width) {
+          & {
+            justify-content: space-between;
+          }
+        }
+
         & > * {
           width: 50%;
           display: flex;
           flex-direction: column;
           margin-bottom: 30px;
+          @media screen and (max-width: $mobile-width) {
+            & {
+              padding: 0 10px;
+              width: 100%;
+              text-align: center;
+            }
+          }
 
           p {
             font-size: 22px;
