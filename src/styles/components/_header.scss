@@ -190,7 +190,7 @@ header {
     }
   }
 
-  nav {
+  .nav {
     position: absolute;
     width: auto;
     height: auto;
@@ -210,7 +210,7 @@ header {
 
       li {
         font-size: 18px;
-        padding-left: 10px;
+        padding: 0 10px;
       }
 
       li:not(:last-child) {
@@ -236,5 +236,15 @@ header {
         display: none;
       }
     }
+  }
+
+  .modal-login {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0%;
+  }
+  .modal-login-active {
+    display: block !important;
   }
 }

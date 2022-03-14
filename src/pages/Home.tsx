@@ -15,17 +15,12 @@ import Car from "../images/car.webp";
 import Security from "../images/lock.webp";
 import MobileApp from "../images/mobile.webp";
 
-export const navigateTo = (to: string) => {
-  try {
-    let offsetTop = document.getElementById(to)!.offsetTop;
-    window.scrollTo({
-      top: offsetTop - 100,
-      behavior: "smooth",
-    });
-  } catch (e) {
-    return;
-  }
-};
+import { ReactComponent as VaultIcon } from "../images/vault.svg";
+import { ReactComponent as DebtsIcon } from "../images/cards.svg";
+import { ReactComponent as InsuranceIcon } from "../images/security.svg";
+import { ReactComponent as PhoneIcon } from "../images/phone.svg";
+
+import { navigateTo } from "../functions/NavigateTo";
 
 export const Home: React.FC = () => {
   // @ https://stackoverflow.com/questions/55376257/how-to-navigate-to-a-particular-div-on-the-same-page-in-reactjs?lq=1
@@ -133,13 +128,32 @@ export const Home: React.FC = () => {
     </div>,
   ];
 
+  const buttonSlides: React.ReactElement[] = [
+    <>
+      <VaultIcon />
+      <p>Вклады</p>
+    </>,
+    <>
+      <DebtsIcon />
+      <p>Кредиты</p>
+    </>,
+    <>
+      <InsuranceIcon />
+      <p>Страхование</p>
+    </>,
+    <>
+      <PhoneIcon />
+      <p>Онлайн-сервисы</p>
+    </>,
+  ];
+
   return (
     <div className='main-wrapper'>
       <div className='slider'>
         <SwiperComponent slides={heroSlides} />
       </div>
       <div className='main-content background-limit'>
-        <Services slides={infoSlides} widthThreshold={1023} id='services' />
+        <Services slides={infoSlides} buttonSlides={buttonSlides} id='services' />
         <Calculator id='calculate' />
         <Map id='map' />
       </div>
