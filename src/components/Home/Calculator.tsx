@@ -1,30 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import dropdownChevron from "../../images/selection-arrow.svg";
 import { ICalculator } from "../../interfaces/ICalculator";
 import { useAction } from "../../redux/hooks/useAction";
-// import { useAction } from "../../redux/hooks/useAction";
-// import { useTypedSelector } from "../../redux/hooks/useTypedSelector";
 import { FirstStep, translateText } from "../../redux/types/calcluatorType";
-import { FieldWithButtons } from "./Calculator/FieldWithButtons";
-import { FieldWithCheckbox } from "./Calculator/FieldWithCheckbox";
-import { FieldWithSlider } from "./Calculator/FieldWithSlider";
+import { Context, ContextWraper } from "../ContextWraper";
+import { InputConsumer } from "../InputConsumer";
+import { Dropdown } from "./Calculator/Dropdown";
 import { Offer } from "./Calculator/Offer";
 
 export const Calculator: React.FC<{ id: string }> = ({ id }) => {
-  // const { activeDropdown, firstStep } = useTypedSelector((state) => state.calculator);
-  const { SetState } = useAction();
+  // const { SetState } = useAction();
   const [activeDropdown, SetDropdown] = useState<boolean>(false);
   const [firstStep, SetFirstStep] = useState<keyof typeof FirstStep | null>(null);
 
-  const ChangeFirstStep = (step: keyof typeof FirstStep) => {
+  const ChangeFirstStep = (step: keyof typeof FirstStep, cb?: () => void) => {
     SetFirstStep(step);
-    SetState("initial_payment", null);
+    cb!();
+    // SetState("initial_payment", null);
   };
 
   const RenderCalculator: React.FC<{ state: ICalculator }> = ({ state }) => {
+    // const context = useContext(Context);
+
+    // useEffect(() => {
+    //   if (firstStep !== null) {
+    //     context.resetState!();
+    //   }
+    // }, [state.firstStep]);
     const FrameComponent: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       //будем тут пробовать type inferrance, чтобы при каждом отдельном case (свича) использовалось отдельный тип CalculatorsLending
       //и ещё будет этот компонент юзать useContext чтобы иметь общий контекст тут и все поля добавлять
+
       return (
         <div className='second-step'>
           <h4>Шаг 2. Введите параметры кредита</h4>
@@ -39,25 +45,30 @@ export const Calculator: React.FC<{ id: string }> = ({ id }) => {
           <FrameComponent>
             <div className='field'>
               <span className='field-title'>Стоимость недвижимости</span>
-              <FieldWithButtons
-                field='estate_cost'
+              <InputConsumer
+                className='field-buttons'
+                inputName='estate_cost'
+                initialValue={1200000}
+                type={"number"}
                 step={10000}
-                defaultValue={1200000}
                 min={1200000}
                 max={25000000}
                 minBoundError={<span className='field-error'>Взнос должен быть больше 1 200 000 рублей</span>}
                 maxBoundError={<span className='field-error'>Взнос должен быть меньше стоимости</span>}
               />
+
               <span className='help-text'>От 1 200 000 до 25 000 000 рублей</span>
             </div>
             <div className='field'>
               <span className='field-title'>Первоначальный взнос</span>
-              <FieldWithSlider
-                field='initial_payment'
-                step={10}
+              <InputConsumer
+                className='field-slider'
+                inputName='initial_payment'
+                initialValue={200000}
+                type={"range"}
+                step={10000}
                 min={200000}
                 max={2000000}
-                defaultValue={200000}
                 prefix='%'
                 showStep={true}
                 dependencyMax={"estate_cost"}
@@ -67,10 +78,25 @@ export const Calculator: React.FC<{ id: string }> = ({ id }) => {
             </div>
             <div className='field'>
               <span className='field-title'>Срок кредитования</span>
-              <FieldWithSlider field='loan_term' step={1} min={5} max={30} defaultValue={5} prefix='лет' />
+              <InputConsumer
+                className='field-slider'
+                inputName='loan_term'
+                initialValue={5}
+                type={"range"}
+                step={1}
+                min={5}
+                max={30}
+                prefix='лет'
+              />
             </div>
             <div className='field'>
-              <FieldWithCheckbox field='parent_capital' defaultValue={false} label='Использовать материнский капитал' />
+              <InputConsumer
+                className='field-checkbox'
+                inputName='parent_capital'
+                initialValue={false}
+                type={"checkbox"}
+                label='Использовать материнский капитал'
+              />
             </div>
           </FrameComponent>
         );
@@ -81,10 +107,12 @@ export const Calculator: React.FC<{ id: string }> = ({ id }) => {
           <FrameComponent>
             <div className='field'>
               <span className='field-title'>Стоимость автомобиля</span>
-              <FieldWithButtons
-                field='car_cost'
+              <InputConsumer
+                className='field-buttons'
+                inputName='car_cost'
+                initialValue={2000000}
+                type={"number"}
                 step={50000}
-                defaultValue={2000000}
                 min={500000}
                 max={5000000}
                 minBoundError={<span className='field-error'>Взнос должен быть больше 500 000 рублей</span>}
@@ -94,12 +122,14 @@ export const Calculator: React.FC<{ id: string }> = ({ id }) => {
             </div>
             <div className='field'>
               <span className='field-title'>Первоначальный взнос</span>
-              <FieldWithSlider
-                field='initial_payment'
+              <InputConsumer
+                className='field-slider'
+                inputName='initial_payment'
+                initialValue={400000}
+                type={"range"}
                 step={5}
                 min={400000}
                 max={2000000}
-                defaultValue={400000}
                 prefix='%'
                 showStep={true}
                 dependencyMax={"car_cost"}
@@ -109,20 +139,36 @@ export const Calculator: React.FC<{ id: string }> = ({ id }) => {
             </div>
             <div className='field'>
               <span className='field-title'>Срок кредитования</span>
-              <FieldWithSlider field='loan_term' step={1} min={1} max={5} defaultValue={1} prefix='лет' />
+              <InputConsumer
+                className='field-slider'
+                inputName='loan_term'
+                initialValue={1}
+                type={"range"}
+                step={1}
+                min={1}
+                max={5}
+                prefix='лет'
+              />
             </div>
             <div className='field'>
-              <FieldWithCheckbox field='casko' defaultValue={false} label='Оформить КАСКО в нашем банке' />
+              <InputConsumer
+                className='field-checkbox'
+                inputName='casko'
+                initialValue={false}
+                type={"checkbox"}
+                label='Оформить КАСКО в нашем банке'
+              />
             </div>
             <div className='field'>
-              <FieldWithCheckbox
-                field='insurance'
-                defaultValue={false}
+              <InputConsumer
+                className='field-checkbox'
+                inputName='insurance'
+                initialValue={false}
+                type={"checkbox"}
                 label='Оформить Страхование жизни в нашем банке'
               />
             </div>
           </FrameComponent>
-          // </Context.Provider>
         );
       }
       case "consumerLending": {
@@ -131,10 +177,12 @@ export const Calculator: React.FC<{ id: string }> = ({ id }) => {
           <FrameComponent>
             <div className='field'>
               <span className='field-title'>Сумма потребительского кредита</span>
-              <FieldWithButtons
-                field='consumer_loan_cost'
+              <InputConsumer
+                className='field-buttons'
+                inputName='consumer_loan_cost'
+                initialValue={50000}
+                type={"number"}
                 step={50000}
-                defaultValue={50000}
                 min={50000}
                 max={3000000}
                 minBoundError={<span className='field-error'>Взнос должен быть больше 50 000 рублей</span>}
@@ -144,12 +192,23 @@ export const Calculator: React.FC<{ id: string }> = ({ id }) => {
             </div>
             <div className='field'>
               <span className='field-title'>Срок кредитования</span>
-              <FieldWithSlider field='loan_term' step={1} min={1} max={7} defaultValue={1} prefix='лет' />
+              <InputConsumer
+                className='field-slider'
+                inputName='loan_term'
+                initialValue={1}
+                type={"range"}
+                step={1}
+                min={1}
+                max={7}
+                prefix='лет'
+              />
             </div>
             <div className='field'>
-              <FieldWithCheckbox
-                field='member'
-                defaultValue={false}
+              <InputConsumer
+                className='field-checkbox'
+                inputName='member'
+                initialValue={false}
+                type={"checkbox"}
                 label='Участник зарплатного проекта нашего банка'
               />
             </div>
@@ -169,56 +228,20 @@ export const Calculator: React.FC<{ id: string }> = ({ id }) => {
       <h1>Кредитный калькулятор</h1>
       <div className='calculator-wrapper'>
         <div className='steps'>
-          <div className='first-step'>
-            <h4>Шаг 1. Цель кредита</h4>
-            <div className='dropdown-wrapper'>
-              <button
-                className='button dropdown'
-                style={{ borderRadius: `4px 4px ${activeDropdown ? "0px 0px" : "4px 4px"}` }}
-                onClick={() => SetDropdown(!activeDropdown)}>
-                {firstStep !== null ? translateText[firstStep] : "Выберите цель кредита"}{" "}
-                {activeDropdown ? (
-                  <img
-                    src={dropdownChevron}
-                    style={{ transform: "scale(-1, -1)" }}
-                    alt='dropdown chevron'
-                    draggable='false'
-                  />
-                ) : (
-                  <img src={dropdownChevron} alt='dropdown chevron' draggable='false' />
-                )}
-              </button>
-              <ul style={{ height: "auto", display: activeDropdown ? "block" : "none" }}>
-                <li
-                  onClick={() => {
-                    SetDropdown(false);
-                    ChangeFirstStep("mortgageLending");
-                  }}>
-                  Ипотечное кредитование
-                </li>
-                <li
-                  onClick={() => {
-                    SetDropdown(false);
-                    ChangeFirstStep("carLending");
-                  }}>
-                  Автомобильное кредитование
-                </li>
-                <li
-                  onClick={() => {
-                    SetDropdown(false);
-                    ChangeFirstStep("consumerLending");
-                  }}>
-                  Потребительский кредит
-                </li>
-              </ul>
-              {/* ) : (
-                <></>
-              )} */}
+          <ContextWraper>
+            <div className='first-step'>
+              <h4>Шаг 1. Цель кредита</h4>
+              <Dropdown
+                activeDropdown={activeDropdown}
+                SetDropdown={SetDropdown}
+                ChangeFirstStep={ChangeFirstStep}
+                firstStep={firstStep!}
+              />
             </div>
-          </div>
-          <RenderCalculator state={{ activeDropdown, firstStep }} />
+            <RenderCalculator state={{ activeDropdown, firstStep }} />
+            {firstStep !== null ? <Offer step={firstStep} /> : <></>}
+          </ContextWraper>
         </div>
-        {firstStep !== null ? <Offer step={firstStep} /> : <></>}
       </div>
     </div>
   );

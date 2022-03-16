@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CalculatorsLending, OurOffer } from "../../../interfaces/ICalculator";
-import { useAction } from "../../../redux/hooks/useAction";
-import { useTypedSelector } from "../../../redux/hooks/useTypedSelector";
 import { CalculationErrors, FirstStep } from "../../../redux/types/calcluatorType";
+import { Context } from "../../ContextWraper";
 
 export const Offer: React.FC<{ step: keyof typeof FirstStep }> = ({ step }) => {
-  const { state } = useTypedSelector((state) => state.calculator);
+  const context = useContext(Context);
+  const state = context.state;
+
   const [error, setError] = useState<keyof typeof CalculationErrors | null>(null);
 
-  const calculateLending = (state: CalculatorsLending, step: keyof typeof FirstStep): OurOffer => {
+  const calculateLending = (state: any, step: keyof typeof FirstStep): OurOffer => {
     const resultState: OurOffer = {
       loan_amount: null,
       interest_rate: null,
@@ -22,7 +23,7 @@ export const Offer: React.FC<{ step: keyof typeof FirstStep }> = ({ step }) => {
     };
 
     const getPayMonth = (cost: number, procRateMonth: number) => {
-      var countPeriods = state.loan_term * 12;
+      var countPeriods = state.loan_term.value * 12;
       resultState.monthly_payment = Math.round(
         cost * (procRateMonth / (1 - 1 / Math.pow(1 + procRateMonth, countPeriods)))
       );
@@ -31,77 +32,89 @@ export const Offer: React.FC<{ step: keyof typeof FirstStep }> = ({ step }) => {
 
     switch (step) {
       case "mortgageLending": {
-        if (state.parent_capital) {
-          resultState.loan_amount = state.estate_cost - state.initial_payment - 470000;
+        if (state.parent_capital && state.estate_cost && state.initial_payment) {
+          if (state.parent_capital && state.parent_capital.value) {
+            resultState.loan_amount = state.estate_cost.value - state.initial_payment.value - 470000;
+          } else {
+            resultState.loan_amount = state.estate_cost.value - state.initial_payment.value;
+          }
+
+          if ((state.initial_payment.value / state.estate_cost.value) * 100 >= 33) {
+            resultState.interest_rate = 8.5;
+            tempState.procRateMonth = 8.5 / 100 / 12;
+          } else {
+            resultState.interest_rate = 9.5;
+            tempState.procRateMonth = 9.4 / 100 / 12;
+          }
+
+          getPayMonth(resultState.loan_amount, tempState.procRateMonth);
+
+          return resultState;
         } else {
-          resultState.loan_amount = state.estate_cost - state.initial_payment;
+          return resultState;
         }
-
-        if ((state.initial_payment / state.estate_cost) * 100 >= 33) {
-          resultState.interest_rate = 8.5;
-          tempState.procRateMonth = 8.5 / 100 / 12;
-        } else {
-          resultState.interest_rate = 9.5;
-          tempState.procRateMonth = 9.4 / 100 / 12;
-        }
-
-        getPayMonth(resultState.loan_amount, tempState.procRateMonth);
-
-        return resultState;
       }
 
       case "carLending": {
-        resultState.loan_amount = state.car_cost - state.initial_payment;
+        if (state.car_cost && state.initial_payment && state.casko) {
+          resultState.loan_amount = state.car_cost.value - state.initial_payment.value;
 
-        if (state.casko && state.insurance) {
-          resultState.interest_rate = 3.5;
-          tempState.procRateMonth = 3.5 / 100 / 12;
-        } else if (state.casko || state.insurance) {
-          resultState.interest_rate = 8.5;
-          tempState.procRateMonth = 8.5 / 100 / 12;
-        } else if (state.car_cost >= 2000000) {
-          resultState.interest_rate = 15;
-          tempState.procRateMonth = 15 / 100 / 12;
+          if (state.casko.value && state.insurance.value) {
+            resultState.interest_rate = 3.5;
+            tempState.procRateMonth = 3.5 / 100 / 12;
+          } else if (state.casko.value || state.insurance.value) {
+            resultState.interest_rate = 8.5;
+            tempState.procRateMonth = 8.5 / 100 / 12;
+          } else if (state.car_cost.value >= 2000000) {
+            resultState.interest_rate = 15;
+            tempState.procRateMonth = 15 / 100 / 12;
+          } else {
+            resultState.interest_rate = 16;
+            tempState.procRateMonth = 16 / 100 / 12;
+          }
+
+          getPayMonth(resultState.loan_amount, tempState.procRateMonth);
+
+          return resultState;
         } else {
-          resultState.interest_rate = 16;
-          tempState.procRateMonth = 16 / 100 / 12;
+          return resultState;
         }
-
-        getPayMonth(resultState.loan_amount, tempState.procRateMonth);
-
-        return resultState;
       }
 
       case "consumerLending": {
-        resultState.loan_amount = state.consumer_loan_cost;
+        if (state.consumer_loan_cost && state.member) {
+          resultState.loan_amount = state.consumer_loan_cost.value;
 
-        if (state.member) {
-          if (state.consumer_loan_cost >= 2000000) {
-            resultState.interest_rate = 9;
-            tempState.procRateMonth = 9 / 100 / 12;
-          } else if (state.consumer_loan_cost >= 750000 && state.consumer_loan_cost < 2000000) {
-            resultState.interest_rate = 12;
-            tempState.procRateMonth = 12 / 100 / 12;
+          if (state.member.value) {
+            if (state.consumer_loan_cost.value >= 2000000) {
+              resultState.interest_rate = 9;
+              tempState.procRateMonth = 9 / 100 / 12;
+            } else if (state.consumer_loan_cost.value >= 750000 && state.consumer_loan_cost.value < 2000000) {
+              resultState.interest_rate = 12;
+              tempState.procRateMonth = 12 / 100 / 12;
+            } else {
+              resultState.interest_rate = 14.5;
+              tempState.procRateMonth = 14.5 / 100 / 12;
+            }
           } else {
-            resultState.interest_rate = 14.5;
-            tempState.procRateMonth = 14.5 / 100 / 12;
+            if (state.consumer_loan_cost.value >= 2000000) {
+              resultState.interest_rate = 9.5;
+              tempState.procRateMonth = 9.5 / 100 / 12;
+            } else if (state.consumer_loan_cost.value >= 750000 && state.consumer_loan_cost.value < 2000000) {
+              resultState.interest_rate = 12.5;
+              tempState.procRateMonth = 12.5 / 100 / 12;
+            } else {
+              resultState.interest_rate = 15;
+              tempState.procRateMonth = 15 / 100 / 12;
+            }
           }
+
+          getPayMonth(resultState.loan_amount!, tempState.procRateMonth);
+
+          return resultState;
         } else {
-          if (state.consumer_loan_cost >= 2000000) {
-            resultState.interest_rate = 9.5;
-            tempState.procRateMonth = 9.5 / 100 / 12;
-          } else if (state.consumer_loan_cost >= 750000 && state.consumer_loan_cost < 2000000) {
-            resultState.interest_rate = 12.5;
-            tempState.procRateMonth = 12.5 / 100 / 12;
-          } else {
-            resultState.interest_rate = 15;
-            tempState.procRateMonth = 15 / 100 / 12;
-          }
+          return resultState;
         }
-
-        getPayMonth(resultState.loan_amount, tempState.procRateMonth);
-
-        return resultState;
       }
 
       default: {
@@ -115,36 +128,44 @@ export const Offer: React.FC<{ step: keyof typeof FirstStep }> = ({ step }) => {
   const { loan_amount, interest_rate, monthly_payment, required_income } = calculationState;
 
   useEffect(() => {
-    if (state.estate_cost && state.initial_payment) {
-      if (state.estate_cost <= state.initial_payment) {
-        if (error === null) {
-          setError(CalculationErrors.threshold);
-          return setState(state);
-        }
-      } else if (state.estate_cost - state.initial_payment - 470000 <= 0 && state.parent_capital === true) {
-        if (error === null) {
-          setError(CalculationErrors.threshold);
-          return setState(state);
-        }
-      } else {
-        if (error !== null) {
-          setError(null);
+    if (state.estate_cost && state.initial_payment && state.parent_capital) {
+      if (state.estate_cost.value && state.initial_payment.value) {
+        if (state.estate_cost.value <= state.initial_payment.value) {
+          if (error === null) {
+            setError(CalculationErrors.threshold);
+            return setState(state);
+          }
+        } else if (
+          state.estate_cost.value - state.initial_payment.value - 470000 <= 0 &&
+          state.parent_capital.value === true
+        ) {
+          if (error === null) {
+            setError(CalculationErrors.threshold);
+            return setState(state);
+          }
+        } else {
+          if (error !== null) {
+            setError(null);
+          }
         }
       }
     }
 
     if (state.car_cost && state.initial_payment) {
-      if (state.car_cost <= state.initial_payment) {
-        if (error === null) {
-          setError(CalculationErrors.threshold);
-          return setState(state);
-        }
-      } else {
-        if (error !== null) {
-          setError(null);
+      if (state.car_cost.value && state.initial_payment.value) {
+        if (state.car_cost.value <= state.initial_payment.value) {
+          if (error === null) {
+            setError(CalculationErrors.threshold);
+            return setState(state);
+          }
+        } else {
+          if (error !== null) {
+            setError(null);
+          }
         }
       }
     }
+
     setState(calculateLending(state!, step));
   }, [state]);
 
@@ -182,7 +203,7 @@ export const Offer: React.FC<{ step: keyof typeof FirstStep }> = ({ step }) => {
             <h3 className='offer-title'>Перейден порог оплаты</h3>
             <span className='error-text'>
               Первым возносом{" "}
-              {state.estate_cost - state.initial_payment && state.parent_capital > 0 ? (
+              {state.estate_cost.value - state.initial_payment.value && state.parent_capital.value > 0 ? (
                 <span>и материнским капиталом</span>
               ) : (
                 <></>

@@ -58,3 +58,36 @@ export interface OurOffer {
   monthly_payment: number | null;
   required_income: number | null;
 }
+
+export interface TextInputBaseInterface {
+  // label: string;
+  // type: any;
+  // onFocus: boolean;
+  // touched: boolean;
+  // dirty: boolean;
+  // valid: boolean;
+  // invalid: boolean;
+  // invalidMsg: null;
+  // value: number | string | boolean;
+  // min?: boolean | number;
+  // max?: boolean | number;
+  // inputName: string;
+  // required: boolean,
+
+  inputName: string;
+  type: "text" | "number" | "range" | "checkbox";
+  initialValue: any;
+  value?: number | string | boolean;
+  className?: string;
+  min?: number;
+  max?: number;
+  step?: number;
+  required?: boolean;
+  label?: string;
+  prefix?: string;
+  showStep?: boolean;
+  dependencyMin?: AvailableKeys;
+  dependencyMax?: AvailableKeys;
+  minBoundError?: React.ReactNode;
+  maxBoundError?: React.ReactNode;
+}
