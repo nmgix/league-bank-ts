@@ -14,14 +14,7 @@ export const Map: React.FC<{ id: string }> = ({ id }) => {
   const mapData: MapState = {
     center: [52.75897861, 38.6158744],
     zoom: 4,
-    // controls: ["fullscreenControl", "geolocationControl", "rulerControl"],
-    // controls: ["fullscreenControl"],
   };
-
-  // const coordinates = [
-  //   [55.684758, 37.738521],
-  //   [57.684758, 39.738521],
-  // ];
 
   const coordinates = {
     russia: [

@@ -47,8 +47,6 @@ export interface ContextState {
   setState: React.Dispatch<any>;
 }
 
-// type ValueOf<T> = T[keyof T];
-
 export type changeStateFunc = (field: string, value: number | string | boolean) => void;
 // надо будет потом заменить number | string | boolean на что-то типа typeof CalculatorsLending[AvailableKeys]
 
@@ -60,20 +58,6 @@ export interface OurOffer {
 }
 
 export interface TextInputBaseInterface {
-  // label: string;
-  // type: any;
-  // onFocus: boolean;
-  // touched: boolean;
-  // dirty: boolean;
-  // valid: boolean;
-  // invalid: boolean;
-  // invalidMsg: null;
-  // value: number | string | boolean;
-  // min?: boolean | number;
-  // max?: boolean | number;
-  // inputName: string;
-  // required: boolean,
-
   inputName: string;
   type: "text" | "number" | "range" | "checkbox";
   initialValue: any;

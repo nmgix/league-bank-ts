@@ -1,36 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
-import dropdownChevron from "../../images/selection-arrow.svg";
+import React, { useState } from "react";
 import { ICalculator } from "../../interfaces/ICalculator";
-import { useAction } from "../../redux/hooks/useAction";
-import { FirstStep, translateText } from "../../redux/types/calcluatorType";
-import { Context, ContextWraper } from "../ContextWraper";
+import { FirstStep } from "../../redux/types/calcluatorType";
+import { ContextWraper } from "../ContextWraper";
 import { InputConsumer } from "../InputConsumer";
 import { Dropdown } from "./Calculator/Dropdown";
 import { Offer } from "./Calculator/Offer";
 
 export const Calculator: React.FC<{ id: string }> = ({ id }) => {
-  // const { SetState } = useAction();
   const [activeDropdown, SetDropdown] = useState<boolean>(false);
   const [firstStep, SetFirstStep] = useState<keyof typeof FirstStep | null>(null);
 
   const ChangeFirstStep = (step: keyof typeof FirstStep, cb?: () => void) => {
     SetFirstStep(step);
     cb!();
-    // SetState("initial_payment", null);
   };
 
   const RenderCalculator: React.FC<{ state: ICalculator }> = ({ state }) => {
-    // const context = useContext(Context);
-
-    // useEffect(() => {
-    //   if (firstStep !== null) {
-    //     context.resetState!();
-    //   }
-    // }, [state.firstStep]);
     const FrameComponent: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-      //будем тут пробовать type inferrance, чтобы при каждом отдельном case (свича) использовалось отдельный тип CalculatorsLending
-      //и ещё будет этот компонент юзать useContext чтобы иметь общий контекст тут и все поля добавлять
-
       return (
         <div className='second-step'>
           <h4>Шаг 2. Введите параметры кредита</h4>
@@ -103,7 +89,6 @@ export const Calculator: React.FC<{ id: string }> = ({ id }) => {
       }
       case "carLending": {
         return (
-          // <Context.Provider value={{ state: ledningState, setState: setLendingState }}>
           <FrameComponent>
             <div className='field'>
               <span className='field-title'>Стоимость автомобиля</span>
@@ -173,7 +158,6 @@ export const Calculator: React.FC<{ id: string }> = ({ id }) => {
       }
       case "consumerLending": {
         return (
-          // <Context.Provider value={{ state: ledningState, setState: setLendingState }}>
           <FrameComponent>
             <div className='field'>
               <span className='field-title'>Сумма потребительского кредита</span>
@@ -223,7 +207,6 @@ export const Calculator: React.FC<{ id: string }> = ({ id }) => {
   };
 
   return (
-    // <CalculatorContext.Provider value={{ state: ledningState, setState: lendingStateChanger }}>
     <div id={id}>
       <h1>Кредитный калькулятор</h1>
       <div className='calculator-wrapper'>

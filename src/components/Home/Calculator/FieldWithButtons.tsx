@@ -1,9 +1,7 @@
-import React, { createRef, useState, useContext, useEffect } from "react";
-// import { Context } from "../Calculator";
-import { changeStateFunc, AvailableKeys } from "../../../interfaces/ICalculator";
+import React, { useState, useEffect } from "react";
+import { AvailableKeys } from "../../../interfaces/ICalculator";
 import { useAction } from "../../../redux/hooks/useAction";
 import { useTypedSelector } from "../../../redux/hooks/useTypedSelector";
-import { FirstStep } from "../../../redux/types/calcluatorType";
 
 export const CheckNumber = (min: number, max: number, value: number, callback: (value: number) => void) => {
   if (value < min) {

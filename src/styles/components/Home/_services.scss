@@ -2,7 +2,6 @@
 
 #services {
   max-width: 1130px;
-  // padding: 0 70px;
 
   .card-switch {
     padding: 0 70px;
@@ -55,7 +54,6 @@
       & > p {
         font-size: 22px;
         font-weight: 500;
-        // margin-bottom: 40px;
 
         @media screen and (max-width: $tablet-width) {
           font-size: 18px;
@@ -63,7 +61,6 @@
       }
 
       ul {
-        // margin-bottom: 40px;
         li {
           margin-left: 20px;
           position: relative;
@@ -90,10 +87,7 @@
     display: none;
     height: 300px;
 
-    // margin-top: 58px;
-
     .swiper-slide {
-      // padding: 20px;
       height: 260px !important;
       min-height: auto;
 
@@ -112,7 +106,6 @@
           width: 55%;
 
           ul {
-            // margin-bottom: 40px;
             li:not(:last-child) {
               margin-bottom: 17px;
             }
@@ -160,7 +153,6 @@
         width: 50%;
         right: -5%;
         bottom: -50px;
-        // opacity: 70%;
       }
     }
   }

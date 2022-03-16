@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useState } from "react";
+import React, { createRef, useEffect } from "react";
 
 export const Modal: React.FC<{
   children: React.ReactNode;
@@ -7,8 +7,6 @@ export const Modal: React.FC<{
   setActive: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ children, parentClassName, active, setActive }) => {
   const ref = createRef<HTMLDivElement>();
-
-  //   const [active, setActive] = useState<boolean>(false);
 
   // @ https://usehooks-ts.com/react-hook/use-on-click-outside
 

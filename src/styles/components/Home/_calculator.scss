@@ -85,7 +85,6 @@
     }
 
     @media (max-width: $mobile-width) {
-      // min-height: 492px;
       margin-top: 30px;
     }
 
@@ -242,7 +241,6 @@
 
             &:focus {
               border: 1px solid color($edging-main);
-              //   outline: none !important;
             }
           }
           input[type="number"]::-webkit-inner-spin-button,
@@ -268,7 +266,6 @@
 
     .offer {
       width: 33%;
-      // min-height: 389px;
       height: 100%;
       margin-top: 25px;
 

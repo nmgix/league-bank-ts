@@ -10,26 +10,6 @@ declare global {
   }
 }
 
-// // @ https://dev.to/finallynero/redux-action-stack-trace-1m0d
-// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
-
-//     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-//     trace: true,
-//     traceLimit: 25
-// }) || compose;
-
-// // @ https://redux.js.org/usage/configuring-your-store/
-// const middlewares = [thunkMiddleware]
-// const middlewareEnhancer = applyMiddleware(...middlewares)
-
-// const enhancers = [middlewareEnhancer]
-
-// // const composeEnhancers = composeWithDevTools({
-// //   ActionCreators,
-// //   trace: true,
-// //   traceLimit: 25,
-// // })
-
 const composeEnhancers = composeWithDevTools({
   trace: true,
 });

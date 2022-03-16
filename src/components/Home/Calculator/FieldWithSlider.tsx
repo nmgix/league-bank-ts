@@ -3,7 +3,6 @@ import { changeStateFunc, AvailableKeys } from "../../../interfaces/ICalculator"
 import { useAction } from "../../../redux/hooks/useAction";
 import { useTypedSelector } from "../../../redux/hooks/useTypedSelector";
 import { CheckNumber } from "./FieldWithButtons";
-// import { useGlobalContext } from "../Calculator";
 
 const FieldWithSlider: React.FC<{
   field: AvailableKeys;
@@ -65,16 +64,8 @@ const FieldWithSlider: React.FC<{
       SetState(field, defaultValue);
     } else {
       setFieldState(state[field]);
-      // setCurrentPercentage(
-      //   !isNaN(((state[field] - minMax.min) / (minMax.max - minMax.min)) * 100)
-      //     ? ((state[field] - minMax.min) / (minMax.max - minMax.min)) * 100
-      //     : 0
-      // );
     }
   }, [state]);
-
-  // пока что неправильно показывает процент, и то только если главный ипнут трогать (ну от которого этот сладйер зависит)
-  // если кнопки жать то всё ок, если писать число, то процент неправильно считается, но слайдер встаёт правильно
 
   return (
     <div className='field-slider' key={field}>

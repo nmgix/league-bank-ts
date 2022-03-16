@@ -11,7 +11,6 @@ export const Dropdown: React.FC<{
   firstStep: keyof typeof FirstStep;
 }> = ({ activeDropdown, SetDropdown, ChangeFirstStep, firstStep }) => {
   const context = useContext(Context);
-  //   context.resetState!();
 
   return (
     <div className='dropdown-wrapper'>

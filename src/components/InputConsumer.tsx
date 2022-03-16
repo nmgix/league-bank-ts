@@ -150,9 +150,6 @@ export const InputConsumer: React.FC<TextInputBaseInterface> = ({
             className={`field-input ${fieldState < minMax.min ? "error" : fieldState > minMax.max ? "error" : ""}`}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               CheckNumber(minMax.min, minMax.max, e.target.valueAsNumber, (value): void => {
-                // setCurrentPercentage(((value - minMax.min) / (minMax.max - minMax.min)) * 100);
-                // SetState(field, value);
-                // setFieldState(value);
                 percentCalc = ((value - minMax.min) / (minMax.max - minMax.min)) * 100;
                 context.onChange!(e, value);
               });
@@ -192,7 +189,6 @@ export const InputConsumer: React.FC<TextInputBaseInterface> = ({
               onChange={(e) => context.onChange!(e, !state[inputName].value)}
             />
             {label}
-            {/* <img src={Checkmark} alt='checkmark' /> */}
           </label>
         </div>
       );
