@@ -8,6 +8,7 @@ import { ReactComponent as FacebookIcon } from "../images/icon-fb.svg";
 import { ReactComponent as InstagramIcon } from "../images/icon-ig.svg";
 import { ReactComponent as TwitterIcon } from "../images/icon-twitter.svg";
 import { ReactComponent as YoutubeIcon } from "../images/icon-youtube.svg";
+import { navigateTo } from "../functions/NavigateTo";
 
 export const Footer: React.FC = () => {
   return (
@@ -23,16 +24,20 @@ export const Footer: React.FC = () => {
         <div className='list'>
           <ul className='nav-list'>
             <li>
-              <a href='#services'>Услуги</a>
+              <a href='#' onClick={() => navigateTo("services")}>
+                Услуги
+              </a>
             </li>
             <li>
-              <a href='#calculate'>Рассчитать кредит</a>
+              <a href='#' onClick={() => navigateTo("calculate")}>
+                Рассчитать кредит
+              </a>
             </li>
             <li>
-              <a href='#contacts'>Контакты</a>
+              <Link to={"contacts"}>Контакты</Link>
             </li>
             <li>
-              <a href='#calculate'>Задать вопрос</a>
+              <Link to={"faq"}>Задать вопрос</Link>
             </li>
           </ul>
         </div>

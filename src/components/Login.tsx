@@ -42,6 +42,9 @@ export const Login: React.FC<{
             <button onClick={() => setForgotPassword(true)}>Забыли пароль?</button>
           </div>
           <button className='button button-primary'>Войти</button>
+          <Link to={"/how-to-register"} onClick={() => closeWindow(false)}>
+            У меня нет аккаунта
+          </Link>
         </>
       ) : (
         <div className='modal-login-reset'>

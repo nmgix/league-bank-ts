@@ -1,4 +1,4 @@
-import { AnyObject } from "./ICheckbox";
+// import { AnyObject } from "./ICheckbox";
 
 export enum IMapCheckboxesEnum {
   russia,
@@ -6,8 +6,13 @@ export enum IMapCheckboxesEnum {
   europe,
 }
 
-export interface IMapCheckboxes extends AnyObject {
-  russia: boolean;
-  sng: boolean;
-  europe: boolean;
+interface IMapCountries {
+  active: boolean;
+  coordinates: number[][];
+}
+
+export interface IMapCheckboxes {
+  russia: IMapCountries;
+  sng: IMapCountries;
+  europe: IMapCountries;
 }

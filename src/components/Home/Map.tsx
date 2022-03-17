@@ -1,14 +1,40 @@
 import React, { useState } from "react";
-import { YMaps, Map as YMap, Placemark, MapState } from "react-yandex-maps";
+import { YMaps, Map as YMap, Placemark, MapState, AnyObject } from "react-yandex-maps";
 import { IMapCheckboxes, IMapCheckboxesEnum } from "../../interfaces/IMap";
 import { LabelCheckbox } from "../essentials/LabelCheckbox";
 import LocationMarker from "../../images/location.svg";
 
 export const Map: React.FC<{ id: string }> = ({ id }) => {
   const [ActiveMarkers, setActiveMarkers] = useState<IMapCheckboxes>({
-    russia: true,
-    sng: true,
-    europe: true,
+    russia: {
+      active: true,
+      coordinates: [
+        [55.75897861, 37.6158744],
+        [58.59281591, 49.66310862],
+        [51.55538262, 46.059593],
+        [57.18885551, 65.57131175],
+        [55.00336661, 73.30568675],
+        [59.94241846, 30.2392805],
+      ],
+    },
+    sng: {
+      active: true,
+      coordinates: [
+        [40.36391621, 49.83888987],
+        [41.29850313, 69.30666331],
+        [53.87639833, 27.55861644],
+        [43.22421706, 76.90920237],
+      ],
+    },
+    europe: {
+      active: true,
+      coordinates: [
+        [48.9644317, 2.29006175],
+        [50.05179937, 14.50685862],
+        [51.61013852, -0.08298513],
+        [42.05625121, 12.6611555],
+      ],
+    },
   });
 
   const mapData: MapState = {
@@ -16,27 +42,8 @@ export const Map: React.FC<{ id: string }> = ({ id }) => {
     zoom: 4,
   };
 
-  const coordinates = {
-    russia: [
-      [55.75897861, 37.6158744],
-      [58.59281591, 49.66310862],
-      [51.55538262, 46.059593],
-      [57.18885551, 65.57131175],
-      [55.00336661, 73.30568675],
-      [59.94241846, 30.2392805],
-    ],
-    sng: [
-      [40.36391621, 49.83888987],
-      [41.29850313, 69.30666331],
-      [53.87639833, 27.55861644],
-      [43.22421706, 76.90920237],
-    ],
-    europe: [
-      [48.9644317, 2.29006175],
-      [50.05179937, 14.50685862],
-      [51.61013852, -0.08298513],
-      [42.05625121, 12.6611555],
-    ],
+  const updateState = (field: string, state: boolean) => {
+    setActiveMarkers({ ...ActiveMarkers, [field]: { ...ActiveMarkers[field as keyof IMapCheckboxes], active: state } });
   };
 
   return (
@@ -47,38 +54,32 @@ export const Map: React.FC<{ id: string }> = ({ id }) => {
           <li>
             <LabelCheckbox
               field='russia'
-              state={ActiveMarkers}
-              defaultValue={true}
+              state={ActiveMarkers["russia"].active}
               label='Россия'
-              setState={setActiveMarkers}
+              setState={updateState}
             />
           </li>
           <li>
-            <LabelCheckbox
-              field='sng'
-              state={ActiveMarkers}
-              defaultValue={true}
-              label='СНГ'
-              setState={setActiveMarkers}
-            />
+            <LabelCheckbox field='sng' state={ActiveMarkers["sng"].active} label='СНГ' setState={updateState} />
           </li>
           <li>
             <LabelCheckbox
               field='europe'
-              state={ActiveMarkers}
-              defaultValue={true}
+              state={ActiveMarkers["europe"].active}
               label='Европа'
-              setState={setActiveMarkers}
+              setState={updateState}
             />
           </li>
         </ul>
       </div>
       <YMaps>
         <YMap defaultState={mapData} width={"100%"} height={"462px"}>
-          {/* {Object.keys(ActiveMarkers).map((country: string, index: number) => 
-            ActiveMarkers[index] ? (
-              coordinates[index].map(
-                (coordinate: number[], index) => (
+          {/* {Object.keys(ActiveMarkers).map((key) => {
+            ActiveMarkers[key as keyof IMapCheckboxes].active &&
+              ActiveMarkers[key as keyof IMapCheckboxes].coordinates.map((coordinate: number[], index) => {
+                console.log(key, coordinate);
+
+                return (
                   <Placemark
                     geometry={coordinate}
                     key={index}
@@ -91,12 +92,11 @@ export const Map: React.FC<{ id: string }> = ({ id }) => {
                       iconImageHref: LocationMarker,
                     }}
                   />
-                )
-              )
-            ) : <></>
-          )} */}
-          {ActiveMarkers.russia ? (
-            coordinates.russia.map((coordinate: number[], index) => (
+                );
+              });
+          })} */}
+          {ActiveMarkers["russia"].active ? (
+            ActiveMarkers["russia"].coordinates.map((coordinate: number[], index) => (
               <Placemark
                 geometry={coordinate}
                 key={index}
@@ -113,8 +113,8 @@ export const Map: React.FC<{ id: string }> = ({ id }) => {
           ) : (
             <></>
           )}
-          {ActiveMarkers.europe ? (
-            coordinates.europe.map((coordinate: number[], index) => (
+          {ActiveMarkers["europe"].active ? (
+            ActiveMarkers["europe"].coordinates.map((coordinate: number[], index) => (
               <Placemark
                 geometry={coordinate}
                 key={index}
@@ -131,8 +131,8 @@ export const Map: React.FC<{ id: string }> = ({ id }) => {
           ) : (
             <></>
           )}
-          {ActiveMarkers.sng ? (
-            coordinates.sng.map((coordinate: number[], index) => (
+          {ActiveMarkers["sng"].active ? (
+            ActiveMarkers["sng"].coordinates.map((coordinate: number[], index) => (
               <Placemark
                 geometry={coordinate}
                 key={index}

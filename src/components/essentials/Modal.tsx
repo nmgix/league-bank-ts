@@ -19,7 +19,9 @@ export const Modal: React.FC<{
       const el = ref.current;
       if (el && !el.contains(event.target as Node)) {
         setActive(false);
-        onCloseCallback!();
+        if (onCloseCallback !== undefined) {
+          onCloseCallback!();
+        }
         return;
       }
     };

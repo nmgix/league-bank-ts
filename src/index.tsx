@@ -31,6 +31,9 @@ ReactDOM.render(
             <Route index element={<ClientHomePage />} />
             <Route path='personal-data' element={<PersonalData />} />
           </Route>
+          <Route path='contacts' element={<></>} />
+          <Route path='how-to-register' element={<></>} />{" "}
+          {/* может быть тут не будет роута, может быть линк будет вести на статью, созданную в FAQ */}
           <Route path='faq' element={<FAQPage />} />
           <Route path='*' element={<Page404 />} /> {/* 404 роут */}
         </Routes>

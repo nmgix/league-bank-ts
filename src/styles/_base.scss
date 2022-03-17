@@ -37,8 +37,12 @@ $small-mobile-width: 360px;
 ::before {
   padding: 0;
   margin: 0;
-  // -webkit-box-sizing: border-box;
-  // box-sizing: border-box;
+}
+
+// @ https://stackoverflow.com/questions/49636727/why-is-scroll-behaviorsmooth-not-working-but-javascript-window-scroll-smooth-is
+
+* {
+  scroll-behavior: smooth;
 }
 
 html,
@@ -197,6 +201,7 @@ ul {
 }
 
 // @  https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/
+
 .field-slider {
   input[type="range"] {
     width: 100%;
@@ -319,7 +324,3 @@ ul {
     line-height: 24px;
   }
 }
-
-// input:-internal-autofill-selected {
-//   background-color: color($background-main) !important;
-// }

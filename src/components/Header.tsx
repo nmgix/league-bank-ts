@@ -35,14 +35,10 @@ export const Header: React.FC = () => {
             </a>
           </li>
           <li>
-            <a href='#' onClick={() => navigateTo("contacts")}>
-              Контакты
-            </a>
+            <Link to={"contacts"}>Контакты</Link>
           </li>
           <li>
-            <a href='#' onClick={() => navigateTo("contacts")}>
-              Задать вопрос
-            </a>
+            <Link to={"faq"}>Задать вопрос</Link>
           </li>
         </ul>
       </Modal>
@@ -78,14 +74,10 @@ export const Header: React.FC = () => {
               </a>
             </li>
             <li>
-              <a href='#' onClick={() => navigateTo("contacts")}>
-                Контакты
-              </a>
+              <Link to={"contacts"}>Контакты</Link>
             </li>
             <li>
-              <a href='#' onClick={() => navigateTo("contacts")}>
-                Задать вопрос
-              </a>
+              <Link to={"faq"}>Задать вопрос</Link>
             </li>
           </ul>
           <button className='login-button' onClick={() => setActiveLogin(true)}>
