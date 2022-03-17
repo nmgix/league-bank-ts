@@ -37,8 +37,8 @@ $small-mobile-width: 360px;
 ::before {
   padding: 0;
   margin: 0;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+  // -webkit-box-sizing: border-box;
+  // box-sizing: border-box;
 }
 
 html,
@@ -137,6 +137,10 @@ ul {
   left: 50%;
 
   transform: translate(-50%, -50%);
+
+  & > * {
+    box-sizing: border-box;
+  }
 }
 .modal-active {
   display: block;
@@ -276,6 +280,12 @@ ul {
 .field-buttons,
 .field-slider,
 .field-default {
+  &,
+  & > *,
+  & input {
+    box-sizing: border-box;
+  }
+
   input[type="number"],
   input[type="text"],
   input[type="password"] {
