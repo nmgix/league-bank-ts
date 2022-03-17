@@ -5,7 +5,11 @@ export const Modal: React.FC<{
   parentClassName: string;
   active: boolean;
   setActive: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ children, parentClassName, active, setActive }) => {
+  dependencyValues?: boolean[] | number[] | string[];
+  onCloseCallback?: () => void;
+  style?: React.CSSProperties;
+  zIndex?: number;
+}> = ({ children, parentClassName, active, setActive, zIndex, style, onCloseCallback, dependencyValues }) => {
   const ref = createRef<HTMLDivElement>();
 
   // @ https://usehooks-ts.com/react-hook/use-on-click-outside
@@ -15,6 +19,7 @@ export const Modal: React.FC<{
       const el = ref.current;
       if (el && !el.contains(event.target as Node)) {
         setActive(false);
+        onCloseCallback!();
         return;
       }
     };
@@ -24,10 +29,10 @@ export const Modal: React.FC<{
     return () => {
       document.removeEventListener("mouseup", clickHandler);
     };
-  }, [active]);
+  }, [dependencyValues, active]);
 
   return (
-    <div ref={ref} className={parentClassName}>
+    <div ref={ref} className={parentClassName} style={{ ...style, zIndex: zIndex ? zIndex : 3 }}>
       {children}
     </div>
   );

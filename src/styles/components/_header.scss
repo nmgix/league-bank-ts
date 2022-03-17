@@ -40,12 +40,13 @@
 header {
   width: 100%;
   height: 90px;
+  z-index: 5;
+  position: relative;
 
   @media screen and (max-width: $tablet-width) {
     & {
       height: 65px;
       position: fixed;
-      z-index: 3;
       background-color: color($background-main);
     }
   }
@@ -144,8 +145,8 @@ header {
   .burger-menu,
   .close-cross {
     .line {
-      width: 23px;
-      height: 3px;
+      width: 24px;
+      height: 2px;
       background-color: #1f1e25;
       display: block;
       margin: 3px auto;
@@ -196,7 +197,7 @@ header {
     background: color($background-main);
     padding: 20px 15px;
 
-    z-index: 3;
+    z-index: 6;
 
     ul {
       margin: 15px 0 0 0;
@@ -223,12 +224,99 @@ header {
   }
 
   .modal-login {
-    display: none;
-    position: absolute;
-    top: 0;
-    right: 0%;
-  }
-  .modal-login-active {
-    display: block !important;
+    background-color: color($background-main);
+    border: 4px solid color($primary-main);
+    padding: 40px 55px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    width: 544px;
+    min-height: 493px;
+
+    @media screen and (max-width: $mobile-width) {
+      & {
+        width: 375px;
+      }
+    }
+
+    @media screen and (max-width: $small-mobile-width) {
+      & {
+        width: 270px;
+      }
+    }
+
+    & > * {
+      width: 100%;
+      height: auto;
+    }
+
+    .modal-login-header {
+      display: flex;
+      justify-content: space-between;
+      .logo {
+        height: 40px;
+        position: relative;
+
+        span:nth-child(2) {
+          padding-bottom: 15px;
+        }
+
+        span:nth-child(3) {
+          position: absolute;
+          top: 18px;
+          left: 37px;
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 14px;
+        }
+      }
+    }
+
+    .modal-login-main {
+      position: relative;
+
+      .field-default {
+        margin-bottom: 28px;
+
+        input {
+          text-align: start;
+        }
+      }
+
+      button {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+        border: 0;
+        opacity: 0.65;
+
+        &:hover {
+          opacity: 0.5;
+          cursor: pointer;
+        }
+      }
+    }
+    & > button {
+      margin-bottom: 22px;
+    }
+
+    .modal-login-reset {
+      height: 350px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      // text-align: center;
+
+      .field-default {
+        margin-top: 15px;
+      }
+      button {
+        margin-top: 60px;
+      }
+    }
   }
 }

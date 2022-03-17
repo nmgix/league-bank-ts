@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { ICalculator } from "../../interfaces/ICalculator";
 import { FirstStep } from "../../redux/types/calcluatorType";
-import { ContextWraper } from "../ContextWraper";
-import { InputConsumer } from "../InputConsumer";
+import { ContextWraper } from "../essentials/ContextWraper";
+import { InputConsumer } from "../essentials/InputConsumer";
 import { Dropdown } from "./Calculator/Dropdown";
 import { Offer } from "./Calculator/Offer";
 
 export const Calculator: React.FC<{ id: string }> = ({ id }) => {
-  const [activeDropdown, SetDropdown] = useState<boolean>(false);
   const [firstStep, SetFirstStep] = useState<keyof typeof FirstStep | null>(null);
 
   const ChangeFirstStep = (step: keyof typeof FirstStep, cb?: () => void) => {
@@ -210,21 +209,16 @@ export const Calculator: React.FC<{ id: string }> = ({ id }) => {
     <div id={id}>
       <h1>Кредитный калькулятор</h1>
       <div className='calculator-wrapper'>
-        <div className='steps'>
-          <ContextWraper>
+        <ContextWraper>
+          <div className='steps'>
             <div className='first-step'>
               <h4>Шаг 1. Цель кредита</h4>
-              <Dropdown
-                activeDropdown={activeDropdown}
-                SetDropdown={SetDropdown}
-                ChangeFirstStep={ChangeFirstStep}
-                firstStep={firstStep!}
-              />
+              <Dropdown ChangeFirstStep={ChangeFirstStep} />
             </div>
-            <RenderCalculator state={{ activeDropdown, firstStep }} />
-            {firstStep !== null ? <Offer step={firstStep} /> : <></>}
-          </ContextWraper>
-        </div>
+            <RenderCalculator state={{ firstStep }} />
+          </div>
+          {firstStep !== null ? <Offer step={firstStep} /> : <></>}
+        </ContextWraper>
       </div>
     </div>
   );

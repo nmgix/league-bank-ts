@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { YMaps, Map as YMap, Placemark, MapState } from "react-yandex-maps";
 import { IMapCheckboxes, IMapCheckboxesEnum } from "../../interfaces/IMap";
-import { LabelCheckbox } from "../LabelCheckbox";
+import { LabelCheckbox } from "../essentials/LabelCheckbox";
 import LocationMarker from "../../images/location.svg";
 
 export const Map: React.FC<{ id: string }> = ({ id }) => {

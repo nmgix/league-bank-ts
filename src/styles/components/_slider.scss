@@ -89,7 +89,7 @@
   }
 
   #slide0 {
-    background: #2c36f2 url(../../images/slider-card.jpg) center no-repeat;
+    background: color($primary-main) url(../../images/slider-card.jpg) center no-repeat;
 
     .info {
       color: color($background-main);

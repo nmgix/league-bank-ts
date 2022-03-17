@@ -6,15 +6,9 @@ export interface CalculatorState {
 }
 
 export enum FirstStep {
-  mortgageLending,
-  carLending,
-  consumerLending,
-}
-
-export enum translateText {
-  "mortgageLending" = "Ипотечное кредитование",
-  "carLending" = "Автомобильное кредитование",
-  "consumerLending" = "Потребительский кредит",
+  mortgageLending = "Ипотечное кредитование",
+  carLending = "Автомобильное кредитование",
+  consumerLending = "Потребительский кредит",
 }
 
 export enum CalculatorTypes {

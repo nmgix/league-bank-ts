@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-import { SwiperComponent } from "../SwiperComponent";
+import { SwiperComponent } from "../essentials/SwiperComponent";
 
 export const Services: React.FC<{ slides: React.ReactElement[]; buttonSlides: React.ReactElement[]; id: string }> = ({
   slides,

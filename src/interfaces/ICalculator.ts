@@ -2,7 +2,6 @@ import React, { Dispatch } from "react";
 import { FirstStep } from "../redux/types/calcluatorType";
 
 export interface ICalculator {
-  activeDropdown: boolean;
   firstStep: keyof typeof FirstStep | null;
 }
 
@@ -59,7 +58,7 @@ export interface OurOffer {
 
 export interface TextInputBaseInterface {
   inputName: string;
-  type: "text" | "number" | "range" | "checkbox";
+  type: "text" | "number" | "range" | "checkbox" | "password";
   initialValue: any;
   value?: number | string | boolean;
   className?: string;

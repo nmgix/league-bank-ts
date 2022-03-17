@@ -1,6 +1,6 @@
 import React from "react";
-import Checkmark from "../images/checkmark.svg";
-import { ICheckbox } from "../interfaces/ICheckbox";
+import Checkmark from "../../images/checkmark.svg";
+import { ICheckbox } from "../../interfaces/ICheckbox";
 
 export const LabelCheckbox: React.FC<ICheckbox> = ({ field, state, defaultValue, label, setState }) => {
   return (

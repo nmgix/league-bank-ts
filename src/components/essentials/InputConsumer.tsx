@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from "react";
-import { TextInputBaseInterface } from "../interfaces/ICalculator";
+import { TextInputBaseInterface } from "../../interfaces/ICalculator";
 import { Context } from "./ContextWraper";
 
-import Checkmark from "../images/checkmark.svg";
+import Checkmark from "../../images/checkmark.svg";
 
 export const CheckNumber = (min: number, max: number, value: number, callback: (value: number) => any) => {
   if (value < min) {
@@ -67,16 +67,28 @@ export const InputConsumer: React.FC<TextInputBaseInterface> = ({
       });
     }
   }, []);
+  const fieldState = state[inputName] && state[inputName].value ? state[inputName].value : initialValue;
 
   switch (type) {
-    case "text": {
-      return <div className={className}></div>;
-    }
-    case "number": {
-      const fieldState = state[inputName] ? state[inputName].value : initialValue;
-
+    case "text":
+    case "password": {
       return (
         <div className={className}>
+          {label && <span className='span-label'>{label}</span>}
+          <input
+            type={type}
+            name={inputName}
+            value={fieldState}
+            className={`field-input`}
+            onChange={context.onChange!}
+          />
+        </div>
+      );
+    }
+    case "number": {
+      return (
+        <div className={className}>
+          {label && <span className='span-label'>{label}</span>}
           <div className='main-input'>
             <button
               onClick={(e) => {
@@ -141,6 +153,7 @@ export const InputConsumer: React.FC<TextInputBaseInterface> = ({
 
       return (
         <div className={className}>
+          {label && <span className='span-label'>{label}</span>}
           <input
             min={state[dependencyMin!]}
             max={state[dependencyMax!]}

@@ -2,32 +2,19 @@ import React, { createRef, useEffect, useRef, useState, RefObject } from "react"
 import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../images/icon-logo.svg";
 import { ReactComponent as IconEnter } from "../images/icon-enter.svg";
-import { Modal } from "./Modal";
+import { Modal } from "./essentials/Modal";
 
 import { navigateTo } from "../functions/NavigateTo";
-
-const CloseCross: React.FC<{ onClick: () => void }> = ({ onClick }) => {
-  return (
-    <div onClick={onClick} className='close-cross'>
-      <div className='line'></div>
-      <div className='line'></div>
-    </div>
-  );
-};
-
-const BurgerMenu: React.FC<{ onClick: () => void }> = ({ onClick }) => {
-  return (
-    <div onClick={onClick} className='burger-menu'>
-      <div className='line'></div>
-      <div className='line'></div>
-      <div className='line'></div>
-    </div>
-  );
-};
+import { ContextWraper } from "./essentials/ContextWraper";
+import { BackgorundBlackout } from "./essentials/BackgorundBlackout";
+import { CloseCross } from "./essentials/CloseCross";
+import { BurgerMenu } from "./essentials/BurgerMenu";
+import { Login } from "./Login";
 
 export const Header: React.FC = () => {
   const [activeNavbar, setActiveNavbar] = useState<boolean>(false);
   const [activeLogin, setActiveLogin] = useState<boolean>(false);
+  const [forgotPassword, setForgotPassword] = useState<boolean>(false);
 
   return (
     <header>
@@ -59,18 +46,19 @@ export const Header: React.FC = () => {
           </li>
         </ul>
       </Modal>
-      <Modal
-        active={activeLogin}
-        setActive={setActiveLogin}
-        parentClassName={`modal-login ${activeLogin ? "modal-login-active" : ""}`}>
-        <CloseCross onClick={() => setActiveLogin(false)} />
-        <input />
-        <div>
-          <input />
-          <button>Забыли пароль?</button>
-        </div>
-        <button className='button button-primary'>Войти</button>
-      </Modal>
+      <ContextWraper>
+        <Modal
+          active={activeLogin}
+          setActive={setActiveLogin}
+          onCloseCallback={() => setForgotPassword(false)}
+          parentClassName={`modal ${activeLogin ? "modal-active" : ""}`}
+          dependencyValues={[forgotPassword]}
+          style={{ top: "36vh" }}
+          zIndex={4}>
+          <Login closeWindow={setActiveLogin} forgotPassword={forgotPassword} setForgotPassword={setForgotPassword} />
+        </Modal>
+      </ContextWraper>
+      {activeLogin && <BackgorundBlackout zIndex={3} opacity={50} /*blur={5}*/ />}
       <div className='container'>
         <div className='wrapper'>
           <BurgerMenu onClick={() => setActiveNavbar(true)} />

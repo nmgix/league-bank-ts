@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { TextInputBaseInterface } from "../interfaces/ICalculator";
+import { TextInputBaseInterface } from "../../interfaces/ICalculator";
 
 // @ https://stackoverflow.com/questions/55757761/handle-an-input-with-react-hooks
 

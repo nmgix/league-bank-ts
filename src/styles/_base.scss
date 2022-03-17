@@ -37,6 +37,8 @@ $small-mobile-width: 360px;
 ::before {
   padding: 0;
   margin: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html,
@@ -127,3 +129,187 @@ ul {
     }
   }
 }
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+}
+.modal-active {
+  display: block;
+}
+
+.field {
+  .field-title {
+    display: block;
+    margin-bottom: 8px;
+  }
+}
+
+.field:not(:last-child) {
+  margin-bottom: 18px;
+}
+
+.field-error {
+  font-size: 14px;
+  color: color($warning);
+  margin-top: 8px;
+}
+
+.field-buttons {
+  display: flex;
+  flex-direction: column;
+
+  .main-input {
+    position: relative;
+
+    button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      cursor: pointer;
+
+      color: color($edging-main);
+      line-height: 55px;
+      font-size: 32px;
+
+      background-color: transparent !important;
+
+      &:focus {
+        outline: none !important;
+      }
+    }
+    button:nth-child(1) {
+      left: 5%;
+    }
+    button:nth-child(3) {
+      right: 5%;
+    }
+  }
+}
+
+// @  https://css-tricks.com/styling-cross-browser-compatible-range-inputs-css/
+.field-slider {
+  input[type="range"] {
+    width: 100%;
+    margin-top: 20px;
+    -webkit-appearance: none;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 1px;
+      cursor: pointer;
+      background: #c1c2ca;
+    }
+    &::-webkit-slider-thumb {
+      height: 14px;
+      width: 14px;
+      border-radius: 10px;
+      background: color($primary-main);
+      cursor: pointer;
+      -webkit-appearance: none;
+      margin-top: -7px;
+    }
+    &:focus::-webkit-slider-runnable-track {
+      background: #c1c2ca;
+    }
+    &::-moz-range-track {
+      width: 100%;
+      height: 1px;
+      cursor: pointer;
+      background: #c1c2ca;
+    }
+    &::-moz-range-thumb {
+      height: 14px;
+      width: 14px;
+      border-radius: 10px;
+      background: color($primary-main);
+      cursor: pointer;
+    }
+    &::-ms-track {
+      width: 100%;
+      height: 8.4px;
+      cursor: pointer;
+      background: transparent;
+      border-color: transparent;
+      border-width: 16px 0;
+      color: transparent;
+    }
+    &::-ms-fill-lower {
+      background: #c1c2ca;
+    }
+    &::-ms-fill-upper {
+      background: #c1c2ca;
+    }
+    &::-ms-thumb {
+      height: 14px;
+      width: 14px;
+      border-radius: 10px;
+      background: color($primary-main);
+      cursor: pointer;
+    }
+    &:focus::-ms-fill-lower {
+      background: #c1c2ca;
+    }
+    &:focus::-ms-fill-upper {
+      background: #c1c2ca;
+    }
+  }
+
+  .range-help {
+    margin-top: 6px;
+    font-size: 14px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.field-buttons,
+.field-slider,
+.field-default {
+  input[type="number"],
+  input[type="text"],
+  input[type="password"] {
+    width: calc(100% - 2px);
+    height: 60px;
+    border: 1px solid color($edging-main);
+    border-radius: 4px;
+    text-align: center;
+    background-color: color($background-main);
+    appearance: textfield;
+    font-family: "Roboto", sans-serif;
+    color: color($edging-main);
+    font-size: 16px;
+    padding: 0 20px;
+
+    &:focus {
+      border: 1px solid color($edging-main);
+    }
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .error {
+    border: 1px solid color($warning) !important;
+  }
+
+  .span-label {
+    line-height: 24px;
+  }
+}
+
+// input:-internal-autofill-selected {
+//   background-color: color($background-main) !important;
+// }

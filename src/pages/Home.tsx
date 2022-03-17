@@ -1,6 +1,6 @@
 import React from "react";
 
-import { SwiperComponent } from "../components/SwiperComponent";
+import { SwiperComponent } from "../components/essentials/SwiperComponent";
 
 import { Calculator } from "../components/Home/Calculator";
 import { Map } from "../components/Home/Map";
