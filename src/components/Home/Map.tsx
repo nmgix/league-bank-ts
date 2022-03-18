@@ -74,11 +74,10 @@ export const Map: React.FC<{ id: string }> = ({ id }) => {
       </div>
       <YMaps>
         <YMap defaultState={mapData} width={"100%"} height={"462px"}>
-          {/* {Object.keys(ActiveMarkers).map((key) => {
-            ActiveMarkers[key as keyof IMapCheckboxes].active &&
+          {Object.keys(ActiveMarkers).map((key) => {
+            return (
+              ActiveMarkers[key as keyof IMapCheckboxes].active &&
               ActiveMarkers[key as keyof IMapCheckboxes].coordinates.map((coordinate: number[], index) => {
-                console.log(key, coordinate);
-
                 return (
                   <Placemark
                     geometry={coordinate}
@@ -93,62 +92,9 @@ export const Map: React.FC<{ id: string }> = ({ id }) => {
                     }}
                   />
                 );
-              });
-          })} */}
-          {ActiveMarkers["russia"].active ? (
-            ActiveMarkers["russia"].coordinates.map((coordinate: number[], index) => (
-              <Placemark
-                geometry={coordinate}
-                key={index}
-                properties={{
-                  iconContent: "iconContent",
-                }}
-                options={{
-                  iconLayout: "default#image",
-                  iconImageSize: [30, 35],
-                  iconImageHref: LocationMarker,
-                }}
-              />
-            ))
-          ) : (
-            <></>
-          )}
-          {ActiveMarkers["europe"].active ? (
-            ActiveMarkers["europe"].coordinates.map((coordinate: number[], index) => (
-              <Placemark
-                geometry={coordinate}
-                key={index}
-                properties={{
-                  iconContent: "iconContent",
-                }}
-                options={{
-                  iconLayout: "default#image",
-                  iconImageSize: [30, 35],
-                  iconImageHref: LocationMarker,
-                }}
-              />
-            ))
-          ) : (
-            <></>
-          )}
-          {ActiveMarkers["sng"].active ? (
-            ActiveMarkers["sng"].coordinates.map((coordinate: number[], index) => (
-              <Placemark
-                geometry={coordinate}
-                key={index}
-                properties={{
-                  iconContent: "iconContent",
-                }}
-                options={{
-                  iconLayout: "default#image",
-                  iconImageSize: [30, 35],
-                  iconImageHref: LocationMarker,
-                }}
-              />
-            ))
-          ) : (
-            <></>
-          )}
+              })
+            );
+          })}
         </YMap>
       </YMaps>
     </div>

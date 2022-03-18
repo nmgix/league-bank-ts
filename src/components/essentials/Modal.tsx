@@ -34,7 +34,10 @@ export const Modal: React.FC<{
   }, [dependencyValues, active]);
 
   return (
-    <div ref={ref} className={parentClassName} style={{ ...style, zIndex: zIndex ? zIndex : 3 }}>
+    <div
+      ref={ref}
+      className={parentClassName}
+      style={{ ...style, zIndex: zIndex ? zIndex : 3, display: active ? "block" : "none" }}>
       {children}
     </div>
   );

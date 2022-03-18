@@ -1,5 +1,9 @@
-import * as CalculatorActions from "./calculatorActionCreator";
+import * as AuthActions from "./AuthActionCreator";
+import * as SearchActions from "./SearchActionCreators";
+import * as UserInfoActions from "./UserInfoActionCreators";
 
 export default {
-  ...CalculatorActions,
+  ...AuthActions,
+  ...SearchActions,
+  ...UserInfoActions,
 };

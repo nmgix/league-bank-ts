@@ -1,8 +1,20 @@
 import React, { Dispatch } from "react";
-import { FirstStep } from "../redux/types/calcluatorType";
 
 export interface ICalculator {
   firstStep: keyof typeof FirstStep | null;
+}
+
+export enum FirstStep {
+  mortgageLending = "Ипотечное кредитование",
+  carLending = "Автомобильное кредитование",
+  consumerLending = "Потребительский кредит",
+}
+
+export enum CalculationErrors {
+  minThersholdError = "minThersholdError",
+  maxThersholdError = "maxThersholdError",
+  threshold = "threshold",
+  default = "default",
 }
 
 export type IFields = {

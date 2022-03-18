@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import { FirstStep } from "../../../redux/types/calcluatorType";
 
 import dropdownChevron from "../../../images/selection-arrow.svg";
+import { FirstStep } from "../../../interfaces/ICalculator";
 import { Context } from "../../essentials/ContextWraper";
 
 export const Dropdown: React.FC<{

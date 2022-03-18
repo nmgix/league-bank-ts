@@ -10,11 +10,16 @@ import { BackgorundBlackout } from "./essentials/BackgorundBlackout";
 import { CloseCross } from "./essentials/CloseCross";
 import { BurgerMenu } from "./essentials/BurgerMenu";
 import { Login } from "./Login";
+import { useTypedSelector } from "../redux/hooks/useTypedSelector";
+import { ImagePlacholder } from "./essentials/ImagePlacholder";
 
 export const Header: React.FC = () => {
   const [activeNavbar, setActiveNavbar] = useState<boolean>(false);
   const [activeLogin, setActiveLogin] = useState<boolean>(false);
+
   const [forgotPassword, setForgotPassword] = useState<boolean>(false);
+
+  const authState = useTypedSelector((state) => state.auth);
 
   return (
     <header>
@@ -80,10 +85,19 @@ export const Header: React.FC = () => {
               <Link to={"faq"}>Задать вопрос</Link>
             </li>
           </ul>
-          <button className='login-button' onClick={() => setActiveLogin(true)}>
-            <IconEnter />
-            <span className='help-text'>Войти в Интернет-банк</span>
-          </button>
+          {authState.state && authState.state.id !== null ? (
+            <Link to={"/home"}>
+              <div className='user-miniature'>
+                <ImagePlacholder width={35} height={35} rounded={true} />
+                <span>{`${authState.state.names.second} ${authState.state.names.first}`}</span>
+              </div>
+            </Link>
+          ) : (
+            <button className='login-button' onClick={() => setActiveLogin(true)}>
+              <IconEnter />
+              <span className='help-text'>Войти в Интернет-банк</span>
+            </button>
+          )}
         </div>
       </div>
     </header>

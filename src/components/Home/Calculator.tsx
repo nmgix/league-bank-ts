@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { ICalculator } from "../../interfaces/ICalculator";
-import { FirstStep } from "../../redux/types/calcluatorType";
+import { FirstStep, ICalculator } from "../../interfaces/ICalculator";
 import { ContextWraper } from "../essentials/ContextWraper";
 import { InputConsumer } from "../essentials/InputConsumer";
 import { Dropdown } from "./Calculator/Dropdown";

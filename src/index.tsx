@@ -18,7 +18,7 @@ ReactDOM.render(
   <Provider store={store}>
     <HashRouter>
       <Header />
-      <>
+      <main>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route
@@ -37,7 +37,7 @@ ReactDOM.render(
           <Route path='faq' element={<FAQPage />} />
           <Route path='*' element={<Page404 />} /> {/* 404 роут */}
         </Routes>
-      </>
+      </main>
       <Footer />
     </HashRouter>
   </Provider>,

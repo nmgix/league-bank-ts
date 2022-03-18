@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { CalculatorsLending, OurOffer } from "../../../interfaces/ICalculator";
-import { CalculationErrors, FirstStep } from "../../../redux/types/calcluatorType";
+import { CalculatorsLending, OurOffer, FirstStep, CalculationErrors } from "../../../interfaces/ICalculator";
 import { Context } from "../../essentials/ContextWraper";
 
 export const Offer: React.FC<{ step: keyof typeof FirstStep }> = ({ step }) => {

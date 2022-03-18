@@ -213,16 +213,6 @@ header {
     }
   }
 
-  .nav-active {
-    display: block;
-
-    @media screen and (min-width: $tablet-width) {
-      & {
-        display: none;
-      }
-    }
-  }
-
   .modal-login {
     background-color: color($background-main);
     border: 4px solid color($primary-main);
@@ -321,6 +311,19 @@ header {
       }
       button {
         margin-top: 60px;
+      }
+    }
+
+    .modal-login-reset-password {
+      display: flex;
+      flex-direction: column;
+
+      & > * {
+        margin-bottom: 20px;
+      }
+
+      .field-default:nth-child(2) {
+        margin-bottom: 60px;
       }
     }
   }

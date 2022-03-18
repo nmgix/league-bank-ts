@@ -148,7 +148,7 @@ export const Home: React.FC = () => {
   ];
 
   return (
-    <div className='main-wrapper'>
+    <>
       <div className='slider'>
         <SwiperComponent slides={heroSlides} />
       </div>
@@ -157,6 +157,6 @@ export const Home: React.FC = () => {
         <Calculator id='calculate' />
         <Map id='map' />
       </div>
-    </div>
+    </>
   );
 };
