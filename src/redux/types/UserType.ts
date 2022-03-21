@@ -5,6 +5,7 @@ export interface INotifications {
     title: string;
     description: string;
     attachments?: any[];
+    date: number;
   };
 }
 

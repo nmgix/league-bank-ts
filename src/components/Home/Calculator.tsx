@@ -8,8 +8,8 @@ import { Offer } from "./Calculator/Offer";
 export const Calculator: React.FC<{ id: string }> = ({ id }) => {
   const [firstStep, SetFirstStep] = useState<keyof typeof FirstStep | null>(null);
 
-  const ChangeFirstStep = (step: keyof typeof FirstStep, cb?: () => void) => {
-    SetFirstStep(step);
+  const ChangeFirstStep = (step: string, cb?: () => void) => {
+    SetFirstStep(step as keyof typeof FirstStep);
     cb!();
   };
 
@@ -212,7 +212,15 @@ export const Calculator: React.FC<{ id: string }> = ({ id }) => {
           <div className='steps'>
             <div className='first-step'>
               <h4>Шаг 1. Цель кредита</h4>
-              <Dropdown ChangeFirstStep={ChangeFirstStep} />
+              <Dropdown
+                ChangeChoice={ChangeFirstStep}
+                defaultValue='Выберите цель кредита'
+                cases={{
+                  mortgageLending: "Ипотечное кредитование",
+                  carLending: "Автомобильное кредитование",
+                  consumerLending: "Потребительский кредит",
+                }}
+              />
             </div>
             <RenderCalculator state={{ firstStep }} />
           </div>

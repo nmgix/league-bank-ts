@@ -1,7 +1,5 @@
 import React from "react";
 
-import { SwiperComponent } from "../components/essentials/SwiperComponent";
-
 import { Calculator } from "../components/Home/Calculator";
 import { Map } from "../components/Home/Map";
 import { Services } from "../components/Home/Services";
@@ -20,6 +18,7 @@ import { ReactComponent as DebtsIcon } from "../images/cards.svg";
 import { ReactComponent as InsuranceIcon } from "../images/security.svg";
 import { ReactComponent as PhoneIcon } from "../images/phone.svg";
 
+import { SwiperComponent } from "../components/essentials/SwiperComponent";
 import { navigateTo } from "../functions/NavigateTo";
 
 export const Home: React.FC = () => {

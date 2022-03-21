@@ -5,6 +5,13 @@ const userInfoMockup: UserInfo = {
     "notification-9263-4c86-a261-f15c6e1db2e9": {
       title: "Ваш валютный счёт 'abroadBalance'(EUR) заблокирован",
       description: "Причиной блокировки счёта являются сомнительные транзакции",
+      date: 1621591374000,
+      //new Date('2021-03-17T18:36:00').getTime();
+    },
+    "6165a8ea-baff-44c5-b7ee-efa83a04ca8e": {
+      title: "Скоро закончится срок действования карты (...33f82d03e5d8)",
+      description: "Срок заканичвается 17 марта 2021г",
+      date: 1615995360000,
     },
   },
   accounts: {

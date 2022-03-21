@@ -1,1 +1,399 @@
 @use "./components/ClientHome/notifications";
+@import "./base";
+
+.client-homepage {
+  display: flex;
+  flex-direction: column;
+
+  & > * {
+    display: flex;
+    width: 100%;
+    margin: 30px 0 !important;
+    flex: 0 1 auto;
+  }
+
+  .dropdown {
+    padding: 10px 22px !important;
+  }
+
+  .main-header {
+    width: auto;
+    height: auto;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+
+    & > * {
+      width: 50%;
+
+      // @ https://stackoverflow.com/questions/33887051/prevent-flex-items-from-stretching
+
+      align-items: flex-end;
+    }
+
+    margin-bottom: 18px !important;
+  }
+
+  .main-news {
+    width: 100%;
+    height: 35vh;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+
+    .ads {
+      width: 65%;
+      height: 100%;
+
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 30px 40px;
+      grid-template-areas:
+        "news1 news1 news2"
+        "news1 news1 news3";
+
+      div {
+        background-color: color($background-main);
+        border: 1px solid color($primary-main);
+        border-radius: 5px;
+      }
+
+      div:nth-child(1) {
+        grid-area: news1;
+      }
+
+      div:nth-child(2) {
+        grid-area: news2;
+      }
+      div:nth-child(3) {
+        grid-area: news3;
+      }
+    }
+
+    .pattern {
+      width: 17%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+
+      // @ https://stackoverflow.com/questions/90178/make-a-div-fill-the-height-of-the-remaining-screen-space
+
+      h3 {
+        text-align: center;
+        flex: 0 1 auto;
+        margin-bottom: 5px;
+      }
+
+      .pattern-wrapper {
+        flex: 1 1 auto;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        // height: 90%;
+
+        .pattern-default {
+          background-color: color($background-main);
+          border: 2px solid color($primary-main);
+          border-radius: 5px;
+
+          height: auto;
+
+          padding: 10px 40px;
+
+          color: color($primary-main);
+          font-size: 16px;
+          font-weight: 600;
+
+          cursor: pointer;
+
+          //   &:not(:first-child),
+          //   &:not(:last-child) {
+          //     margin: 10px 0;
+          //   }
+        }
+
+        .other-patterns {
+          border: none;
+          font-size: 14px;
+          font-weight: 400;
+          opacity: 0.65;
+
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .main-balance {
+    width: auto;
+    height: 400px;
+    // & > *,
+    // & > * > *,
+    // & > * > * {
+    //   width: 100%;
+    // }
+
+    display: flex;
+    flex-direction: column;
+
+    flex: 1 1 auto !important;
+
+    .balance-header {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      justify-content: space-between;
+      margin-bottom: 25px;
+
+      flex: 0 1 auto;
+
+      & > * {
+        h2 {
+          margin-bottom: 15px;
+        }
+      }
+
+      .current-balance {
+        width: 200px;
+        flex: 0 1 auto;
+
+        margin-right: 50px;
+
+        h2 {
+          text-align: center;
+        }
+      }
+
+      .actions {
+        flex: 1 1 auto;
+
+        display: flex;
+        flex-direction: column;
+
+        h2 {
+          font-weight: 400;
+          flex: 0 1 auto;
+        }
+
+        .actions-wrapper {
+          flex: 1 1 auto;
+          width: 100%;
+          height: auto;
+          display: flex;
+
+          & > *:not(:first-child) {
+            margin-left: 10px;
+          }
+
+          .action-default {
+            background-color: color($background-main);
+            border: 2px solid color($primary-main);
+            border-radius: 5px;
+
+            height: auto;
+
+            padding: 10px 40px;
+
+            color: color($primary-main);
+            font-size: 16px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            //   &:not(:first-child),
+            //   &:not(:last-child) {
+            //     margin: 10px 0;
+            //   }
+          }
+
+          .other-actions {
+            border: none;
+            font-size: 16px;
+            font-weight: 400;
+            opacity: 0.65;
+            line-height: 40px;
+            margin-left: 20px;
+
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    .balance-info-wrapper {
+      flex: 1 1 auto;
+
+      height: 400px;
+      display: flex;
+      flex-direction: row;
+
+      position: relative;
+
+      .balance-info {
+        width: 60%;
+
+        display: flex;
+
+        .chart {
+          width: 400px;
+          height: 100%;
+          position: relative;
+
+          div {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            padding-top: 15px;
+
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+          }
+        }
+
+        .chart-details {
+          display: flex;
+          flex-direction: column;
+          margin: 0 10px;
+
+          .income,
+          .outcome {
+            display: flex;
+            flex-direction: column;
+            h3 {
+              margin-bottom: 10px;
+              flex: 0 1 auto;
+            }
+
+            .positive,
+            .negative {
+              opacity: 0.6;
+            }
+
+            .details-wrapper {
+              flex: 1 1 auto;
+              display: flex;
+              flex-direction: column;
+
+              .detail {
+                margin-left: 20px;
+                margin-bottom: 5px;
+
+                position: relative;
+
+                .color-marker {
+                  position: absolute;
+
+                  left: -20px;
+                  top: 10%;
+
+                  background-color: color($primary-main);
+                  border-radius: 50%;
+                  width: 14px;
+                  height: 14px;
+                }
+
+                .history-reference {
+                  cursor: pointer;
+                  border: none;
+                  font-size: 16px;
+                  background-color: transparent;
+                  text-decoration: underline;
+                }
+              }
+            }
+          }
+          .income {
+            // flex: 1 1 auto;
+            // h3 {
+            // }
+          }
+
+          .outcome {
+            // flex: 0 1 auto;
+            h3 {
+              opacity: 0.6;
+            }
+          }
+        }
+      }
+
+      .balance-history {
+        display: flex;
+        flex-direction: column;
+
+        width: 40%;
+
+        & > h2 {
+          margin-bottom: 10px;
+          flex: 0 1 auto;
+        }
+
+        .balance-history-wrapper {
+          overflow-y: scroll;
+          display: flex;
+          flex-direction: column;
+          flex: 1 1 auto;
+
+          // &::before {
+          //   content: "";
+          //   z-index: 2;
+          //   width: 40%;
+          //   height: 70px;
+          //   background: linear-gradient(180deg, rgba(255, 255, 255, 1) 33%, rgba(255, 255, 255, 0) 78%);
+
+          //   position: absolute;
+          //   top: 25px;
+          // }
+
+          // &::after {
+          //   content: "";
+          //   z-index: 2;
+          //   width: 40%;
+          //   height: 70px;
+          //   background: linear-gradient(360deg, rgba(255, 255, 255, 1) 33%, rgba(255, 255, 255, 0) 78%);
+
+          //   position: absolute;
+          //   bottom: 25px;
+          // }
+
+          .history-default {
+            margin: 7px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+
+            .history-default-wrapper {
+              border: 2px solid color($edging-main);
+              border-radius: 5px;
+              padding: 11px 15px;
+
+              h3 {
+                max-width: 80%;
+              }
+              span {
+                max-width: 80%;
+              }
+            }
+
+            .history-default-date {
+              margin-top: 3px;
+              opacity: 0.7;
+              align-self: end;
+            }
+          }
+          // .history-default:first-child {
+          //   margin-top: 40px;
+          // }
+          // .history-default:last-child {
+          //   margin-bottom: 40px;
+          // }
+        }
+      }
+    }
+  }
+}

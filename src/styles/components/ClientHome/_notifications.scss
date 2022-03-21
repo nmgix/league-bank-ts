@@ -1,14 +1,75 @@
+@import "../../base";
+
 .notifications {
+  display: flex;
+  justify-content: end;
+  flex-direction: column;
+  width: 400px;
+
+  position: relative;
+
   .notifications-button {
+    cursor: pointer;
     box-shadow: none;
+    border: none;
+    display: flex;
+    justify-content: end;
+    background-color: transparent;
 
     img {
       width: 30px;
       border: none;
       outline: none;
     }
+
+    &:hover,
+    &:active {
+      background-color: none;
+    }
   }
 
   .modal-notifications {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 100%;
+
+    display: flex;
+    border: 1px solid color($primary-main);
+    border-radius: 5px;
+    background-color: color($background-main);
+
+    ul {
+      display: flex;
+      flex-direction: column;
+
+      li {
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid color($primary-main);
+
+        .notifications-date {
+          opacity: 0.7;
+          width: 100%;
+          margin-top: 8px;
+        }
+
+        p {
+          font-size: 18px;
+          font-weight: 700;
+          margin-bottom: 3px;
+        }
+        span {
+          font-size: 14px;
+          padding: 0 5px;
+        }
+      }
+
+      li:last-child {
+        border-bottom: none;
+      }
+    }
   }
 }

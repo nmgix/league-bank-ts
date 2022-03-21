@@ -1,15 +1,19 @@
 import React, { useContext, useState } from "react";
 
 import dropdownChevron from "../../../images/selection-arrow.svg";
-import { FirstStep } from "../../../interfaces/ICalculator";
 import { Context } from "../../essentials/ContextWraper";
+import { Modal } from "../../essentials/Modal";
 
 export const Dropdown: React.FC<{
-  ChangeFirstStep: (step: keyof typeof FirstStep, cb: () => void) => void;
-}> = ({ ChangeFirstStep }) => {
+  defaultValue: string;
+  cases: {
+    [x: string]: string | any;
+  };
+  ChangeChoice: (choice: string | any, cb?: () => void) => void;
+}> = ({ ChangeChoice, cases, defaultValue }) => {
   const context = useContext(Context);
 
-  const [currentCase, setCurrentCase] = useState<keyof typeof FirstStep | null>(null);
+  const [currentCase, setCurrentCase] = useState<string | null>(null);
   const [activeDropdown, SetDropdown] = useState<boolean>(false);
 
   return (
@@ -17,8 +21,10 @@ export const Dropdown: React.FC<{
       <button
         className='button dropdown'
         style={{ borderRadius: `4px 4px ${activeDropdown ? "0px 0px" : "4px 4px"}` }}
-        onClick={() => SetDropdown(!activeDropdown)}>
-        {currentCase !== null ? FirstStep[currentCase] : "Выберите цель кредита"}
+        onClick={() => {
+          SetDropdown(!activeDropdown);
+        }}>
+        {currentCase !== null ? cases[currentCase] : defaultValue}
 
         {activeDropdown ? (
           <img src={dropdownChevron} style={{ transform: "scale(-1, -1)" }} alt='dropdown chevron' draggable='false' />
@@ -27,19 +33,25 @@ export const Dropdown: React.FC<{
         )}
       </button>
 
-      <ul style={{ height: "auto", display: activeDropdown ? "block" : "none", width: "100%" }}>
-        {Object.keys(FirstStep).map((key) => (
-          <li
-            key={key}
-            onClick={() => {
-              SetDropdown(false);
-              setCurrentCase(key as keyof typeof FirstStep);
-              ChangeFirstStep(key as keyof typeof FirstStep, () => context.resetState!());
-            }}>
-            {FirstStep[key as keyof typeof FirstStep]}
-          </li>
-        ))}
-      </ul>
+      <Modal
+        style={{ height: "auto", display: activeDropdown ? "block" : "none", width: "100%" }}
+        active={activeDropdown}
+        setActive={SetDropdown}
+        dependencyValues={SetDropdown}>
+        <ul style={{ height: "auto", width: "100%", boxSizing: "border-box" }}>
+          {Object.keys(cases).map((key) => (
+            <li
+              key={key}
+              onClick={() => {
+                SetDropdown(false);
+                setCurrentCase(key);
+                ChangeChoice(key, () => context.resetState!());
+              }}>
+              {cases[key]}
+            </li>
+          ))}
+        </ul>
+      </Modal>
     </div>
   );
 };

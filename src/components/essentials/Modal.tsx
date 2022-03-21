@@ -2,10 +2,10 @@ import React, { createRef, useEffect } from "react";
 
 export const Modal: React.FC<{
   children: React.ReactNode;
-  parentClassName: string;
   active: boolean;
   setActive: React.Dispatch<React.SetStateAction<boolean>>;
-  dependencyValues?: boolean[] | number[] | string[];
+  dependencyValues?: boolean[] | number[] | string[] | (() => void)[] | React.Dispatch<any>[] | React.Dispatch<any>;
+  parentClassName?: string;
   onCloseCallback?: () => void;
   style?: React.CSSProperties;
   zIndex?: number;
@@ -36,7 +36,7 @@ export const Modal: React.FC<{
   return (
     <div
       ref={ref}
-      className={parentClassName}
+      className={parentClassName ? parentClassName : ""}
       style={{ ...style, zIndex: zIndex ? zIndex : 3, display: active ? "block" : "none" }}>
       {children}
     </div>

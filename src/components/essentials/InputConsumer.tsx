@@ -3,6 +3,7 @@ import { TextInputBaseInterface } from "../../interfaces/ICalculator";
 import { Context } from "./ContextWraper";
 
 import Checkmark from "../../images/checkmark.svg";
+import { LabelCheckbox } from "./LabelCheckbox";
 
 export const CheckNumber = (min: number, max: number, value: number, callback: (value: number) => any) => {
   if (value < min) {
@@ -195,7 +196,9 @@ export const InputConsumer: React.FC<TextInputBaseInterface> = ({
         <div className={className}>
           <label>
             <input
-              style={{ content: state.value === true ? `url(${Checkmark})` : " " }}
+              // style={{
+              //   content: inputName !== null && state.value === true ? `url(${Checkmark})` : " ",
+              // }}
               type={"checkbox"}
               name={inputName}
               checked={state ? state.value : initialValue}
@@ -203,6 +206,7 @@ export const InputConsumer: React.FC<TextInputBaseInterface> = ({
             />
             {label}
           </label>
+          {/* <LabelCheckbox field=""/> */}
         </div>
       );
     }
