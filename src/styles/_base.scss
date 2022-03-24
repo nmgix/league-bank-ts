@@ -397,7 +397,7 @@ main {
   background-color: color($background-main);
   img {
     position: absolute;
-    top: 40%;
+    top: 36%;
     right: 10%;
   }
 }
@@ -432,5 +432,16 @@ main {
     li:not(:last-child) {
       border-bottom: 1px solid rgba(#1f1e25, 0.3);
     }
+  }
+}
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .loader-text {
+    font-size: 14px;
+    opacity: 0.8;
   }
 }

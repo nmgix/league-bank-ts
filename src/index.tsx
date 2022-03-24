@@ -35,6 +35,10 @@ ReactDOM.render(
           <Route path='how-to-register' element={<></>} />{" "}
           {/* может быть тут не будет роута, может быть линк будет вести на статью, созданную в FAQ */}
           <Route path='faq' element={<FAQPage />} />
+          {/* <Route path='posts' element={<></>}>
+            <Route path=':exmaple-link' element={<div></div>} />
+          </Route> */}
+          <Route path='posts/*' element={<></>} />
           <Route path='*' element={<Page404 />} /> {/* 404 роут */}
         </Routes>
       </main>

@@ -36,7 +36,7 @@ export function getUser(login: string, password: string): AuthActions {
 }
 
 export function resetState(): AuthActions {
-  return { type: AuthTypes.AUTH_RESET };
+  return { type: AuthTypes.AUTH_RESET, payload: {} };
 }
 
 export function resetPassword(login: string, oldPassword: string, newPassword: string): AuthActions {

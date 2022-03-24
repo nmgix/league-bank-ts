@@ -112,13 +112,15 @@ header {
     }
 
     .wrapper {
-      outline: 1px solid #c0ffef;
+      border: 1px solid #c0ffef;
       height: 100%;
       padding: 0 6.5% 0 4.5%;
 
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      box-sizing: border-box;
 
       & .nav-list {
         display: flex;

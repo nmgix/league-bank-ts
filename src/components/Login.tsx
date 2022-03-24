@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { ReactNode, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as Logo } from "../images/icon-logo.svg";
 import { useAction } from "../redux/hooks/useAction";
@@ -60,7 +60,7 @@ export const Login: React.FC<{
       </div>
       {!forgotPassword ? (
         <>
-          {authState.error !== null && <span>{authState.error}</span>}
+          {authState.error !== null && <span>{authState.error as ReactNode}</span>}
           <div className='modal-login-main'>
             <InputConsumer inputName='login' type='text' initialValue={""} label={"Логин"} className='field-default' />
             <InputConsumer
@@ -88,7 +88,7 @@ export const Login: React.FC<{
             <span>Привязанный к аккаунту</span>
           </div>
           <InputConsumer inputName='login' type='text' initialValue={""} className='field-default' />
-          {authState.error !== null && <span>{authState.error}</span>}
+          {authState.error !== null && <span>{authState.error as ReactNode}</span>}
           <button className='button button-primary' onClick={() => existsUser(context.state["login"].value)}>
             Отправить
           </button>

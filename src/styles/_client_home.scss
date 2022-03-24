@@ -39,6 +39,7 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: nowrap;
+    margin-top: 0 !important;
 
     .ads {
       width: 65%;
@@ -56,6 +57,10 @@
         background-color: color($background-main);
         border: 1px solid color($primary-main);
         border-radius: 5px;
+
+        cursor: pointer;
+
+        padding: 20px;
       }
 
       div:nth-child(1) {
@@ -260,65 +265,84 @@
           flex-direction: column;
           margin: 0 10px;
 
+          // &,
+          // & > *,
+          // & > * > * {
+          //   transition: all 0.2s ease-in-out;
+          // }
+
           .income,
-          .outcome {
+          .expenses {
             display: flex;
             flex-direction: column;
+
+            display: flex;
+            flex-direction: column;
+            flex: 0 1 auto;
+
             h3 {
+              cursor: pointer;
               margin-bottom: 10px;
               flex: 0 1 auto;
-            }
-
-            .positive,
-            .negative {
               opacity: 0.6;
             }
 
-            .details-wrapper {
-              flex: 1 1 auto;
-              display: flex;
-              flex-direction: column;
+            .detail {
+              margin-left: 20px;
+              margin-bottom: 5px;
 
-              .detail {
-                margin-left: 20px;
-                margin-bottom: 5px;
+              display: none;
 
-                position: relative;
+              position: relative;
 
-                .color-marker {
-                  position: absolute;
+              .color-marker {
+                position: absolute;
 
-                  left: -20px;
-                  top: 10%;
+                left: -20px;
+                top: 10%;
 
-                  background-color: color($primary-main);
-                  border-radius: 50%;
-                  width: 14px;
-                  height: 14px;
-                }
+                background-color: color($primary-main);
+                border-radius: 50%;
+                width: 14px;
+                height: 14px;
+              }
 
-                .history-reference {
-                  cursor: pointer;
-                  border: none;
-                  font-size: 16px;
-                  background-color: transparent;
-                  text-decoration: underline;
-                }
+              .history-reference {
+                cursor: pointer;
+                border: none;
+                font-size: 16px;
+                background-color: transparent;
+                text-decoration: underline;
               }
             }
           }
-          .income {
-            // flex: 1 1 auto;
-            // h3 {
-            // }
+
+          .active {
+            h3 {
+              opacity: 1;
+            }
+            .detail {
+              opacity: 1;
+              display: flex !important;
+            }
+            display: flex !important;
+            justify-content: center;
+
+            flex: 1 1 auto !important;
           }
 
-          .outcome {
-            // flex: 0 1 auto;
-            h3 {
-              opacity: 0.6;
-            }
-          }
+          // .income {
+          //   // flex: 1 1 auto;
+          //   // h3 {
+          //   // }
+          // }
+
+          // .expenses {
+          //   // flex: 0 1 auto;
+          //   h3 {
+          //     opacity: 0.6;
+          //   }
+          // }
         }
       }
 

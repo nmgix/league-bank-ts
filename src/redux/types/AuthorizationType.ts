@@ -1,4 +1,4 @@
-import { defaultAction } from "./defaultType";
+import { Action, ErrorPayload } from "./defaultType";
 
 export interface UserState {
   id: string;
@@ -14,7 +14,7 @@ export interface UserState {
 
 export interface AuthState {
   state: UserState | null;
-  error: string;
+  error: void | null | {} | ErrorPayload;
 }
 
 export enum AuthTypes {
@@ -25,25 +25,10 @@ export enum AuthTypes {
   AUTH_PASSWORD_RESET = "AUTH_PASSWORD_RESET",
 }
 
-interface AuthRequest extends defaultAction {
-  type: AuthTypes.AUTH_REQUEST;
-}
-
-interface AuthSuccess extends defaultAction {
-  type: AuthTypes.AUTH_SUCCESS;
-  payload: UserState;
-}
-
-interface AuthError extends defaultAction {
-  type: AuthTypes.AUTH_ERROR;
-}
-
-interface AuthReset extends defaultAction {
-  type: AuthTypes.AUTH_RESET;
-}
-
-interface AuthPasswordReset extends defaultAction {
-  type: AuthTypes.AUTH_PASSWORD_RESET;
-}
+type AuthRequest = Action<typeof AuthTypes.AUTH_REQUEST, void>;
+type AuthSuccess = Action<typeof AuthTypes.AUTH_SUCCESS, UserState>;
+type AuthError = Action<typeof AuthTypes.AUTH_ERROR, ErrorPayload>;
+type AuthReset = Action<typeof AuthTypes.AUTH_RESET, {}>;
+type AuthPasswordReset = Action<typeof AuthTypes.AUTH_PASSWORD_RESET, any>;
 
 export type AuthActions = AuthRequest | AuthSuccess | AuthError | AuthReset | AuthPasswordReset;

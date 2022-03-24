@@ -5,7 +5,10 @@ const initialState: AnyState<UserState> = {
   state: null,
   error: null,
 };
-export const userInfoReducer = (state: AnyState<UserState> = initialState, action: UserInfoActions) => {
+export const userInfoReducer = (
+  state: AnyState<UserState> = initialState,
+  action: UserInfoActions
+): AnyState<UserState> => {
   switch (action.type) {
     case UserInfoTypes.USER_INFO_SUCCESS: {
       return { ...state, state: action.payload, error: null };
