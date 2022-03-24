@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/league-bank-ts/static/css/main.5b47efe6.css",
-    "main.js": "/league-bank-ts/static/js/main.90cec85d.js",
+    "main.css": "/league-bank-ts/static/css/main.f3c2e4d0.css",
+    "main.js": "/league-bank-ts/static/js/main.7982eb07.js",
     "static/media/Infinity-1s-200px.gif": "/league-bank-ts/static/media/Infinity-1s-200px.12878b092c65568957c9.gif",
     "static/media/slider-card.jpg": "/league-bank-ts/static/media/slider-card.1bacda94dd1eb4107b76.jpg",
     "static/media/car.webp": "/league-bank-ts/static/media/car.5ca9881abfc1a7d4440c.webp",
@@ -28,11 +28,11 @@
     "static/media/icon-fb.svg": "/league-bank-ts/static/media/icon-fb.80b4dbdd0cfc98aba1aa880cf71c2e64.svg",
     "static/media/checkmark.svg": "/league-bank-ts/static/media/checkmark.f96b3f05ad9afabe4c7b613d98ed6bcf.svg",
     "static/media/selection-arrow.svg": "/league-bank-ts/static/media/selection-arrow.839f9c06348136e2c32a21e0ffe815db.svg",
-    "main.5b47efe6.css.map": "/league-bank-ts/static/css/main.5b47efe6.css.map",
-    "main.90cec85d.js.map": "/league-bank-ts/static/js/main.90cec85d.js.map"
+    "main.f3c2e4d0.css.map": "/league-bank-ts/static/css/main.f3c2e4d0.css.map",
+    "main.7982eb07.js.map": "/league-bank-ts/static/js/main.7982eb07.js.map"
   },
   "entrypoints": [
-    "static/css/main.5b47efe6.css",
-    "static/js/main.90cec85d.js"
+    "static/css/main.f3c2e4d0.css",
+    "static/js/main.7982eb07.js"
   ]
 }
