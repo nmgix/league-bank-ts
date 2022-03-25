@@ -32,28 +32,81 @@ export const Balance: React.FC<{ currentAccount: keyof IAccounts | null }> = ({ 
   const renderDetails = (currentTab: "income" | "expenses", data: IHistory): IHistory => {
     const positiveType = currentTab === "income" ? incomeTypes : expensesTypes;
     const negativeType = currentTab === "income" ? expensesTypes : incomeTypes;
-    // console.log(
-    //   Object.keys(data).map((historyId) => {
-    //     // @ https://stackoverflow.com/questions/40598296/how-to-check-if-a-given-string-key-exists-in-enum
-    //     if (data[historyId].type in positiveType) {
-    //       return { [historyId]: data[historyId] };
-    //     } else if (data[historyId].type in negativeType) {
-    //       return;
-    //     }
-    //   })
-    // );
 
-    return Object.assign(
-      {},
-      ...Object.keys(data).map((historyId) => {
-        // @ https://stackoverflow.com/questions/40598296/how-to-check-if-a-given-string-key-exists-in-enum
-        if (data[historyId].type in positiveType) {
-          return { [historyId]: data[historyId] };
-        } else if (data[historyId].type in negativeType) {
-          return;
-        }
-      })
-    );
+    var newData = JSON.parse(JSON.stringify(data));
+
+    var obj = Object.keys(newData).map((historyId) => {
+      return { [historyId]: newData[historyId] };
+    });
+
+    if (Array.isArray(obj) && obj.length) {
+      // if (currObj[Object.keys(currObj)[0]].type in negativeType) {
+      //     console.log
+      //   return { [Object.keys(prevObj)[0]]: null };
+      // } else {
+      //   obj = obj.map((el) => {
+      //     if (el[Object.keys(el)[0]].type in negativeType) {
+      //       return
+      //     } else {
+      //       return el;
+      //     }
+      //   });
+      //   console.log(obj);
+      //   console.log(obj);
+
+      obj = obj.filter((elem) => elem[Object.keys(elem)[0]].type in positiveType);
+      //   Object.keys(negativeType).map((el) => console.log(el));
+
+      //   if (currObj[Object.keys(currObj)[0]].type in negativeType) {
+      //     return delete obj[prevObj];
+      //   }
+
+      //   var obj2 = obj.reduce((prevObj, currObj) => {
+      //     if (
+      //       prevObj[Object.keys(prevObj)[0]] !== undefined &&
+      //       prevObj[Object.keys(prevObj)[0]].type in positiveType &&
+      //       currObj[Object.keys(currObj)[0]].type in positiveType &&
+      //       prevObj[Object.keys(prevObj)[0]].type === currObj[Object.keys(currObj)[0]].type
+      //     ) {
+      //       console.log(prevObj[Object.keys(prevObj)[0]].type, currObj[Object.keys(currObj)[0]].type);
+      //       var data = prevObj;
+      //       data[Object.keys(data)[0]].value += currObj[Object.keys(currObj)[0]].value;
+
+      //       return data;
+      //     } else {
+      //       console.log(prevObj, currObj);
+      //       return currObj;
+      //     }
+      //   });
+
+      //   obj = obj.sort((prevValue, currentValue) => {
+      //     if (prevValue[Object.keys(prevValue)[0]].type < currentValue[Object.keys(currentValue)[0]].type) {
+      //       return -1;
+      //     } else if (1 !== 1) {
+      //       return 1;
+      //     }
+      //     return 0;
+      //   });
+      // .map((el: IHistory, index) => {
+      //   if (
+      //     el[Object.keys(el)[0]] !== undefined &&
+      //     obj[index + 1] !== undefined &&
+      //     el[Object.keys(el)[0]].type === obj[index + 1][Object.keys(obj[index + 1])[0]].type
+      //   ) {
+      //     const data = el[Object.keys(el)[0]];
+      //     data.value += obj[index + 1][Object.keys(obj[index + 1])[0]].value;
+
+      //     return data;
+      //   } else {
+      //     return el;
+      //   }
+      // });
+
+      console.log(obj);
+      return data;
+    } else {
+      return data;
+    }
   };
 
   const [state, setState] = useState<IAccounts>();
