@@ -196,9 +196,6 @@ export const InputConsumer: React.FC<TextInputBaseInterface> = ({
         <div className={className}>
           <label>
             <input
-              // style={{
-              //   content: inputName !== null && state.value === true ? `url(${Checkmark})` : " ",
-              // }}
               type={"checkbox"}
               name={inputName}
               checked={state ? state.value : initialValue}

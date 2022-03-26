@@ -17,8 +17,7 @@ export const BackgorundBlackout: React.FC<{ zIndex: number; opacity: number /*bl
       style={{
         zIndex: zIndex,
         opacity: `${opacity}%`,
-        // filter: blur !== 0 ? `blur(${blur}px)` : "none",
-        height: height /* + height * 0.01*/,
+        height: height,
       }}
       className='background-blackout'></div>
   );
