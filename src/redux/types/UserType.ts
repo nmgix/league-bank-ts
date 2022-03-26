@@ -14,7 +14,12 @@ export enum expensesTypes {
   "withdrawal" = "Снятия валюты",
 }
 
-export type exchangeType = keyof typeof incomeTypes | keyof typeof expensesTypes;
+export const exchangeType = {
+  ...incomeTypes,
+  ...expensesTypes,
+};
+
+export type exchangeTypeKeys = keyof typeof incomeTypes | keyof typeof expensesTypes;
 
 export interface INotifications {
   [id: string]: {
@@ -34,28 +39,30 @@ export interface IAccounts {
   history: IHistory;
 }
 
+export interface defaultHistoryProps {
+  title: string;
+  description: string;
+  type: exchangeTypeKeys;
+  currency: "RUB" | "USD" | "EUR" | "CNY";
+  value: number;
+  //   date: Date;
+  date: number;
+}
+
+export interface HistoryPropsTransaction extends defaultHistoryProps {
+  title: string;
+  description: string;
+  type: exchangeTypeKeys;
+  sender: string; //айди отправителя
+  reciever: string;
+  currency: "RUB" | "USD" | "EUR" | "CNY";
+  value: number;
+  //   date: Date;
+  date: number;
+}
+
 export interface IHistory {
-  [id: string]:
-    | {
-        title: string;
-        description: string;
-        type: exchangeType;
-        sender: string; //айди отправителя
-        reciever: string;
-        currency: "RUB" | "USD" | "EUR" | "CNY";
-        value: number;
-        //   date: Date;
-        date: number;
-      }
-    | {
-        title: string;
-        description: string;
-        type: exchangeType;
-        currency: "RUB" | "USD" | "EUR" | "CNY";
-        value: number;
-        //   date: Date;
-        date: number;
-      };
+  [id: string]: HistoryPropsTransaction | defaultHistoryProps;
 }
 
 export interface IPatterns {

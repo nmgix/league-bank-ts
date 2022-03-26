@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
+import { groupBy } from "../../functions/GroupBy";
 import { useTypedSelector } from "../../redux/hooks/useTypedSelector";
-import { expensesTypes, IAccounts, IHistory, incomeTypes } from "../../redux/types/UserType";
+import {
+  exchangeType,
+  exchangeTypeKeys,
+  expensesTypes,
+  HistoryPropsTransaction,
+  IAccounts,
+  IHistory,
+  incomeTypes,
+} from "../../redux/types/UserType";
 import { Loader } from "../essentials/Loader";
 
 const timeFormatOptions: Intl.DateTimeFormatOptions = {
@@ -26,92 +35,65 @@ const colors = [
   "#845ace",
 ];
 
+type grouppedIndexes = Record<exchangeTypeKeys, IHistory[]> | {};
+
+// @ https://stackoverflow.com/questions/42136098/array-groupby-in-typescript
+
+const MarkersWithLables: React.FC<{
+  dataTyped: {
+    [x: string]: {
+      value: number;
+      color: string;
+    };
+  } | null;
+}> = ({ dataTyped }) => {
+  return dataTyped !== null ? (
+    <>
+      {Object.keys(dataTyped).map((currentType) => {
+        return (
+          <span className='detail' key={currentType}>
+            <div className='color-marker' style={{ backgroundColor: dataTyped![currentType].color }}></div>
+            {/*10% -*/}{" "}
+            <button className='history-reference'>{exchangeType[currentType as keyof typeof exchangeType]}</button>
+          </span>
+        );
+      })}
+    </>
+  ) : (
+    <>
+      <Loader />
+    </>
+  );
+};
+
 export const Balance: React.FC<{ currentAccount: keyof IAccounts | null }> = ({ currentAccount }) => {
   const userInfo = useTypedSelector((state) => state.userInfo);
 
-  const renderDetails = (currentTab: "income" | "expenses", data: IHistory): IHistory => {
+  const renderDetails = (currentTab: "income" | "expenses", data: IHistory): grouppedIndexes => {
     const positiveType = currentTab === "income" ? incomeTypes : expensesTypes;
-    const negativeType = currentTab === "income" ? expensesTypes : incomeTypes;
+    // const negativeType = currentTab === "income" ? expensesTypes : incomeTypes;
 
     var newData = JSON.parse(JSON.stringify(data));
 
+    console.log(newData);
     var obj = Object.keys(newData).map((historyId) => {
       return { [historyId]: newData[historyId] };
     });
+    console.log(obj);
 
     if (Array.isArray(obj) && obj.length) {
-      // if (currObj[Object.keys(currObj)[0]].type in negativeType) {
-      //     console.log
-      //   return { [Object.keys(prevObj)[0]]: null };
-      // } else {
-      //   obj = obj.map((el) => {
-      //     if (el[Object.keys(el)[0]].type in negativeType) {
-      //       return
-      //     } else {
-      //       return el;
-      //     }
-      //   });
-      //   console.log(obj);
-      //   console.log(obj);
-
       obj = obj.filter((elem) => elem[Object.keys(elem)[0]].type in positiveType);
-      //   Object.keys(negativeType).map((el) => console.log(el));
+      var group = groupBy(obj, (el) => el[Object.keys(el)[0]].type);
 
-      //   if (currObj[Object.keys(currObj)[0]].type in negativeType) {
-      //     return delete obj[prevObj];
-      //   }
-
-      //   var obj2 = obj.reduce((prevObj, currObj) => {
-      //     if (
-      //       prevObj[Object.keys(prevObj)[0]] !== undefined &&
-      //       prevObj[Object.keys(prevObj)[0]].type in positiveType &&
-      //       currObj[Object.keys(currObj)[0]].type in positiveType &&
-      //       prevObj[Object.keys(prevObj)[0]].type === currObj[Object.keys(currObj)[0]].type
-      //     ) {
-      //       console.log(prevObj[Object.keys(prevObj)[0]].type, currObj[Object.keys(currObj)[0]].type);
-      //       var data = prevObj;
-      //       data[Object.keys(data)[0]].value += currObj[Object.keys(currObj)[0]].value;
-
-      //       return data;
-      //     } else {
-      //       console.log(prevObj, currObj);
-      //       return currObj;
-      //     }
-      //   });
-
-      //   obj = obj.sort((prevValue, currentValue) => {
-      //     if (prevValue[Object.keys(prevValue)[0]].type < currentValue[Object.keys(currentValue)[0]].type) {
-      //       return -1;
-      //     } else if (1 !== 1) {
-      //       return 1;
-      //     }
-      //     return 0;
-      //   });
-      // .map((el: IHistory, index) => {
-      //   if (
-      //     el[Object.keys(el)[0]] !== undefined &&
-      //     obj[index + 1] !== undefined &&
-      //     el[Object.keys(el)[0]].type === obj[index + 1][Object.keys(obj[index + 1])[0]].type
-      //   ) {
-      //     const data = el[Object.keys(el)[0]];
-      //     data.value += obj[index + 1][Object.keys(obj[index + 1])[0]].value;
-
-      //     return data;
-      //   } else {
-      //     return el;
-      //   }
-      // });
-
-      console.log(obj);
-      return data;
+      return group;
     } else {
-      return data;
+      return {};
     }
   };
 
   const [state, setState] = useState<IAccounts>();
-  const [currentIndexes, setIndexes] = useState<IHistory>();
-  const [dataColors, setDataColors] = useState<{
+  //   const [currentIndexes, setIndexes] = useState<grouppedIndexes>();
+  const [dataTyped, setdataTyped] = useState<{
     [x: string]: {
       value: number;
       color: string;
@@ -122,8 +104,9 @@ export const Balance: React.FC<{ currentAccount: keyof IAccounts | null }> = ({ 
   useEffect(() => {
     if (currentAccount !== null) {
       setState(userInfo.state!.accounts[currentAccount]);
-      setDataColors(sortColors(renderDetails(currentTab, userInfo.state!.accounts[currentAccount].history)));
-      setIndexes(renderDetails(currentTab, userInfo.state!.accounts[currentAccount].history));
+
+      setdataTyped(sortTypes(renderDetails(currentTab, userInfo.state!.accounts[currentAccount].history)));
+      console.log(sortTypes(renderDetails(currentTab, userInfo.state!.accounts[currentAccount].history)));
     }
   }, [currentAccount, currentTab, userInfo]);
 
@@ -131,8 +114,8 @@ export const Balance: React.FC<{ currentAccount: keyof IAccounts | null }> = ({ 
     setCurrentTab("income");
   }, [currentAccount]);
 
-  const sortColors = (
-    data: IHistory
+  const sortTypes = (
+    data: grouppedIndexes
   ): {
     [x: string]: {
       value: number;
@@ -142,13 +125,47 @@ export const Balance: React.FC<{ currentAccount: keyof IAccounts | null }> = ({ 
     return Object.assign(
       {},
       ...Object.keys(data).map((key) => {
+        //   var element = data[key as keyof grouppedIndexes][0][
+        //     Object.keys(data[key as keyof grouppedIndexes][0])[0]
+        //   ] as HistoryPropsTransaction;
+
+        var typeArray: IHistory[] = data[key as keyof grouppedIndexes];
+        var calcedArray = typeArray.reduce((prevEl, currEl) => {
+          var prevObj = prevEl[Object.keys(prevEl)[0]];
+          prevObj.value += currEl[Object.keys(currEl)[0]].value;
+
+          return prevEl;
+          //   return 2
+        });
+
         return {
           [key]: {
-            value: data[key].value,
+            value: calcedArray[Object.keys(calcedArray)[0]].value,
             color: colors[Math.floor(Math.random() * colors.length)],
           },
         };
+
+        //   return {
+        //     [key]: {
+        //       value: typeArray.reduce((prevEl, currEl) => {
+        //         var prevObj = prevEl[Object.keys(prevEl)[0]]
+        //         prevObj.value+= currEl[Object.keys(currEl)[0]].value
+
+        //           return prevObj
+        //         //   return 2
+        //       }),
+        //       color: colors[Math.floor(Math.random() * colors.length)],
+        //     },
+        //   };
       })
+      //   ...Object.keys(data).map((key) => {
+      //     return {
+      //       [key as keyof grouppedIndexes]: {
+      //         value: data[key as keyof grouppedIndexes][0][Object.keys( data[key as keyof grouppedIndexes][0])[0]],
+      //         color: colors[Math.floor(Math.random() * colors.length)],
+      //       },
+      //     };
+      //   })
     );
   };
 
@@ -164,14 +181,14 @@ export const Balance: React.FC<{ currentAccount: keyof IAccounts | null }> = ({ 
                 {
                   label: "My First dataset",
                   backgroundColor: [
-                    ...Object.keys(dataColors!).map((id) => {
-                      return dataColors![id].color;
+                    ...Object.keys(dataTyped!).map((id) => {
+                      return dataTyped![id].color;
                     }),
                   ],
                   borderColor: "#FFF",
                   data: [
-                    ...Object.keys(dataColors!).map((id) => {
-                      return dataColors![id].value;
+                    ...Object.keys(dataTyped!).map((id) => {
+                      return dataTyped![id].value;
                     }),
                   ],
                 },
@@ -194,31 +211,11 @@ export const Balance: React.FC<{ currentAccount: keyof IAccounts | null }> = ({ 
         <div className='chart-details'>
           <div className={`income ${currentTab === "income" ? "active" : ""}`}>
             <h3 onClick={() => setCurrentTab("income")}>Доходы {/*<span className='positive'>(+20%)</span>*/}</h3>
-            {Object.keys(currentIndexes!).map((historyId) => {
-              return (
-                <span className='detail' key={historyId}>
-                  <div className='color-marker' style={{ backgroundColor: dataColors![historyId].color }}></div>
-                  {/*10% -*/}{" "}
-                  <button className='history-reference'>
-                    {incomeTypes[currentIndexes![historyId].type as keyof typeof incomeTypes]}
-                  </button>
-                </span>
-              );
-            })}
+            <MarkersWithLables dataTyped={dataTyped} />
           </div>
           <div className={`expenses ${currentTab === "expenses" ? "active" : ""}`}>
             <h3 onClick={() => setCurrentTab("expenses")}>Расходы {/*}span className=''>(-10%)</span></div>*/}</h3>
-            {Object.keys(currentIndexes!).map((historyId) => {
-              return (
-                <span className='detail' key={historyId}>
-                  <div className='color-marker' style={{ backgroundColor: dataColors![historyId].color }}></div>
-                  {/*10% -*/}{" "}
-                  <button className='history-reference'>
-                    {expensesTypes[currentIndexes![historyId].type as keyof typeof expensesTypes]}
-                  </button>
-                </span>
-              );
-            })}
+            <MarkersWithLables dataTyped={dataTyped} />
           </div>
         </div>
       </div>
