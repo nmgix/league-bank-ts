@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/league-bank-ts/static/css/main.f3c2e4d0.css",
-    "main.js": "/league-bank-ts/static/js/main.69dc0494.js",
+    "main.js": "/league-bank-ts/static/js/main.b7c83de4.js",
     "static/media/Infinity-1s-200px.gif": "/league-bank-ts/static/media/Infinity-1s-200px.12878b092c65568957c9.gif",
     "static/media/slider-card.jpg": "/league-bank-ts/static/media/slider-card.1bacda94dd1eb4107b76.jpg",
     "static/media/car.webp": "/league-bank-ts/static/media/car.5ca9881abfc1a7d4440c.webp",
@@ -29,10 +29,10 @@
     "static/media/checkmark.svg": "/league-bank-ts/static/media/checkmark.f96b3f05ad9afabe4c7b613d98ed6bcf.svg",
     "static/media/selection-arrow.svg": "/league-bank-ts/static/media/selection-arrow.839f9c06348136e2c32a21e0ffe815db.svg",
     "main.f3c2e4d0.css.map": "/league-bank-ts/static/css/main.f3c2e4d0.css.map",
-    "main.69dc0494.js.map": "/league-bank-ts/static/js/main.69dc0494.js.map"
+    "main.b7c83de4.js.map": "/league-bank-ts/static/js/main.b7c83de4.js.map"
   },
   "entrypoints": [
     "static/css/main.f3c2e4d0.css",
-    "static/js/main.69dc0494.js"
+    "static/js/main.b7c83de4.js"
   ]
 }
