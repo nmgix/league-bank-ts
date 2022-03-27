@@ -1,25 +1,5 @@
+import { IAccounts } from "./AccountsType";
 import { Action, ErrorPayload } from "./defaultType";
-
-export enum incomeTypes {
-  "iternal-account-transaction_from" = "Внутренние транзакции между счетами",
-  "transaction_from" = "Транзакции извне",
-  "deposit" = "Пополнения валютой",
-}
-
-export enum expensesTypes {
-  "iternal-account-transaction_to" = "Внутренние транзакции между счетами",
-  "other-payments" = "Другие платежи",
-  "utilities_payment" = "Оплата коммунальных услуг",
-  "transaction_to" = "Транзакции на другие счета",
-  "withdrawal" = "Снятия валюты",
-}
-
-export const exchangeType = {
-  ...incomeTypes,
-  ...expensesTypes,
-};
-
-export type exchangeTypeKeys = keyof typeof incomeTypes | keyof typeof expensesTypes;
 
 export interface INotifications {
   [id: string]: {
@@ -28,41 +8,6 @@ export interface INotifications {
     attachments?: any[];
     date: number;
   };
-}
-
-export interface IAccounts {
-  name: string;
-  type: "settlement" | "credit" | "deposit" | "budget";
-  currency: "RUB" | "USD" | "EUR" | "CNY";
-  balance: number;
-  blocked: boolean;
-  history: IHistory;
-}
-
-export interface defaultHistoryProps {
-  title: string;
-  description: string;
-  type: exchangeTypeKeys;
-  currency: "RUB" | "USD" | "EUR" | "CNY";
-  value: number;
-  //   date: Date;
-  date: number;
-}
-
-export interface HistoryPropsTransaction extends defaultHistoryProps {
-  title: string;
-  description: string;
-  type: exchangeTypeKeys;
-  sender: string; //айди отправителя
-  reciever: string;
-  currency: "RUB" | "USD" | "EUR" | "CNY";
-  value: number;
-  //   date: Date;
-  date: number;
-}
-
-export interface IHistory {
-  [id: string]: HistoryPropsTransaction | defaultHistoryProps;
 }
 
 export interface IPatterns {

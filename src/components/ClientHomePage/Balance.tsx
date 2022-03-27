@@ -9,7 +9,7 @@ import {
   IAccounts,
   IHistory,
   incomeTypes,
-} from "../../redux/types/UserType";
+} from "../../redux/types/AccountsType";
 import { Loader } from "../essentials/Loader";
 
 const timeFormatOptions: Intl.DateTimeFormatOptions = {

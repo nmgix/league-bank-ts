@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { Notifications } from "../../components/ClientHomePage/Notifications";
 import { Loader } from "../../components/essentials/Loader";
@@ -7,8 +6,7 @@ import { Dropdown } from "../../components/Home/Calculator/Dropdown";
 import { dependeciesObj, TimeArrange } from "../../functions/TimeArrange";
 import { useAction } from "../../redux/hooks/useAction";
 import { useTypedSelector } from "../../redux/hooks/useTypedSelector";
-import { IAccounts, IPatterns } from "../../redux/types/UserType";
-import { Doughnut } from "react-chartjs-2";
+import { BalanceTypeEnum, BalanceType, IAccounts } from "../../redux/types/AccountsType";
 
 // @ https://stackoverflow.com/questions/71429342/react-chart-js-2-in-combination-with-typescript-for-linecharts-uncaught-error
 
@@ -16,6 +14,7 @@ import "chart.js/auto";
 import { Patterns } from "../../components/ClientHomePage/Patterns";
 import { Ads } from "../../components/ClientHomePage/Ads";
 import { Balance } from "../../components/ClientHomePage/Balance";
+import { KeysOfUnion } from "../../interfaces/ICalculator";
 
 export const ClientHomePage: React.FC = () => {
   const user = useTypedSelector((state) => state.auth);
@@ -59,6 +58,8 @@ export const ClientHomePage: React.FC = () => {
     // },
   };
 
+  const idk = (key: KeysOfUnion<BalanceTypeEnum>) => {};
+
   return userInfo.state ? (
     <div className='main-content background-limit client-homepage'>
       <div className='main-header'>
@@ -92,15 +93,47 @@ export const ClientHomePage: React.FC = () => {
               }
             />
           </div>
-          <div className='actions'>
-            <h2>Доступные действия</h2>
-            <div className='actions-wrapper'>
-              <div className='action-default'>Перевод</div>
-              <div className='action-default'>Зачисление</div>
-              <div className='action-default'>Выписка</div>
-              <div className='other-actions'>Другое ...</div>
+          {balance ? (
+            <div className='actions'>
+              <h2>Доступные действия</h2>
+              <div className='actions-wrapper'>
+                {Object.keys(BalanceType[userInfo.state.accounts[balance!].type]).length < 4 ? (
+                  Object.keys(BalanceType[userInfo.state.accounts[balance!].type]).map((el) => {
+                    return (
+                      <div className='action-default'>{BalanceType[userInfo.state!.accounts[balance!].type][el]}</div>
+                    );
+                  })
+                ) : (
+                  <>
+                    <div className='action-default'>
+                      {
+                        BalanceType[userInfo.state!.accounts[balance!].type][
+                          Object.keys(BalanceType[userInfo.state!.accounts[balance!].type])[0]
+                        ]
+                      }
+                    </div>
+                    <div className='action-default'>
+                      {
+                        BalanceType[userInfo.state!.accounts[balance!].type][
+                          Object.keys(BalanceType[userInfo.state!.accounts[balance!].type])[1]
+                        ]
+                      }
+                    </div>
+                    <div className='action-default'>
+                      {
+                        BalanceType[userInfo.state!.accounts[balance!].type][
+                          Object.keys(BalanceType[userInfo.state!.accounts[balance!].type])[2]
+                        ]
+                      }
+                    </div>
+                    <div className='other-actions'>Другое ...</div>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
+          ) : (
+            <></>
+          )}
         </div>
         <Balance currentAccount={balance} />
       </div>

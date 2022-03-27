@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { YMaps, Map as YMap, Placemark, MapState, AnyObject } from "react-yandex-maps";
-import { IMapCheckboxes, IMapCheckboxesEnum } from "../../interfaces/IMap";
+import { IMapCheckboxes } from "../../interfaces/IMap";
 import { LabelCheckbox } from "../essentials/LabelCheckbox";
 import LocationMarker from "../../images/location.svg";
 
