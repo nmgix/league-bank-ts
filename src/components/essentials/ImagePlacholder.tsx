@@ -7,7 +7,9 @@ export const ImagePlacholder: React.FC<{ width: number; height: number; rounded?
   src,
 }) => {
   if (src) {
-    return <img src={src} style={{ width: width, height: height, borderRadius: rounded ? "50%" : "" }} />;
+    return (
+      <img src={src} style={{ width: width, height: height, borderRadius: rounded ? "50%" : "" }} draggable={false} />
+    );
   } else {
     return (
       <div

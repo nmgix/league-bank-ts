@@ -1,5 +1,5 @@
 @use "./components/ClientHome/notifications";
-@import "./base";
+@use "./base" as colors;
 
 .client-homepage {
   display: flex;
@@ -54,8 +54,8 @@
         "news1 news1 news3";
 
       div {
-        background-color: color($background-main);
-        border: 1px solid color($primary-main);
+        background-color: colors.color(colors.$background-main);
+        border: 1px solid colors.color(colors.$primary-main);
         border-radius: 5px;
 
         cursor: pointer;
@@ -99,15 +99,15 @@
         // height: 90%;
 
         .pattern-default {
-          background-color: color($background-main);
-          border: 2px solid color($primary-main);
+          background-color: colors.color(colors.$background-main);
+          border: 2px solid colors.color(colors.$primary-main);
           border-radius: 5px;
 
           height: auto;
 
           padding: 10px 40px;
 
-          color: color($primary-main);
+          color: colors.color(colors.$primary-main);
           font-size: 16px;
           font-weight: 600;
 
@@ -193,15 +193,15 @@
           }
 
           .action-default {
-            background-color: color($background-main);
-            border: 2px solid color($primary-main);
+            background-color: colors.color(colors.$background-main);
+            border: 2px solid colors.color(colors.$primary-main);
             border-radius: 5px;
 
             height: auto;
 
             padding: 10px 40px;
 
-            color: color($primary-main);
+            color: colors.color(colors.$primary-main);
             font-size: 16px;
             font-weight: 600;
 
@@ -301,7 +301,7 @@
                 left: -20px;
                 top: 10%;
 
-                background-color: color($primary-main);
+                background-color: colors.color(colors.$primary-main);
                 border-radius: 50%;
                 width: 14px;
                 height: 14px;
@@ -392,7 +392,7 @@
             align-items: stretch;
 
             .history-default-wrapper {
-              border: 2px solid color($edging-main);
+              border: 2px solid colors.color(colors.$edging-main);
               border-radius: 5px;
               padding: 11px 15px;
 

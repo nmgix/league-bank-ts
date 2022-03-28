@@ -26,6 +26,7 @@ export enum incomeTypes {
   "iternal-account-transaction_from" = "Внутренние транзакции между счетами",
   "transaction_from" = "Транзакции извне",
   "deposit" = "Пополнения валютой",
+  "open_credit" = "Открытие кредита",
 }
 
 export enum expensesTypes {

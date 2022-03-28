@@ -1,4 +1,4 @@
-@import "../../base";
+@use "../../base" as baseVars;
 
 #services {
   max-width: 1130px;
@@ -55,7 +55,7 @@
         font-size: 22px;
         font-weight: 500;
 
-        @media screen and (max-width: $tablet-width) {
+        @media screen and (max-width: baseVars.$tablet-width) {
           font-size: 18px;
         }
       }
@@ -131,7 +131,7 @@
     }
   }
 
-  @media screen and (max-width: $tablet-width) {
+  @media screen and (max-width: baseVars.$tablet-width) {
     .slider {
       display: block;
       // height: auto;

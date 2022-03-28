@@ -1,4 +1,4 @@
-@import "../base";
+@use "../base" as sizes;
 
 footer {
   max-width: 1180px;
@@ -6,7 +6,7 @@ footer {
   margin: 100px auto 0 auto;
   padding: 60px 0;
 
-  @media screen and (max-width: $mobile-width) {
+  @media screen and (max-width: sizes.$mobile-width) {
     & {
       margin-top: 0 !important;
       padding-bottom: 10px;
@@ -23,7 +23,7 @@ footer {
     justify-content: space-between;
     flex-wrap: wrap;
 
-    @media screen and (max-width: $tablet-width) {
+    @media screen and (max-width: sizes.$tablet-width) {
       & {
         justify-content: space-around;
       }
@@ -33,7 +33,7 @@ footer {
       }
     }
 
-    @media screen and (max-width: $mobile-width) {
+    @media screen and (max-width: sizes.$mobile-width) {
       & {
         flex-direction: column-reverse;
       }
@@ -99,7 +99,7 @@ footer {
         line-height: 17px;
       }
 
-      @media screen and (max-width: $mobile-width) {
+      @media screen and (max-width: sizes.$mobile-width) {
         & {
           padding-left: calc(11px + 35px) !important;
           width: 90% !important;
@@ -112,14 +112,14 @@ footer {
       ul {
         display: flex;
         justify-content: space-between;
-        @media screen and (max-width: $tablet-width) {
+        @media screen and (max-width: sizes.$tablet-width) {
           & {
             height: 26px;
             align-items: center;
           }
         }
 
-        @media screen and (max-width: $mobile-width) {
+        @media screen and (max-width: sizes.$mobile-width) {
           & {
             margin-bottom: 35px;
           }

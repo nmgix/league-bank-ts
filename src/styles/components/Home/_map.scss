@@ -1,4 +1,4 @@
-@import "../../base";
+@use "../../base" as baseVars;
 
 #map {
   .checkboxes {
@@ -12,13 +12,13 @@
       justify-content: space-between;
     }
 
-    @media screen and (max-width: $tablet-width) {
+    @media screen and (max-width: baseVars.$tablet-width) {
       & {
         width: 50%;
       }
     }
 
-    @media screen and (max-width: $mobile-width) {
+    @media screen and (max-width: baseVars.$mobile-width) {
       & {
         width: 90%;
       }

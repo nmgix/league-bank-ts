@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TextInputBaseInterface } from "../../interfaces/ICalculator";
 import { Context } from "./ContextWraper";
 
-import Checkmark from "../../images/checkmark.svg";
-import { LabelCheckbox } from "./LabelCheckbox";
+import ShowIcon from "../../images/show_eye_icon_183818.svg";
+import HideIcon from "../../images/hide_icon_184010.svg";
 
 export const CheckNumber = (min: number, max: number, value: number, callback: (value: number) => any) => {
   if (value < min) {
@@ -69,10 +69,10 @@ export const InputConsumer: React.FC<TextInputBaseInterface> = ({
     }
   }, []);
   const fieldState = state[inputName] && state[inputName].value ? state[inputName].value : initialValue;
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   switch (type) {
-    case "text":
-    case "password": {
+    case "text": {
       return (
         <div className={className}>
           {label && <span className='span-label'>{label}</span>}
@@ -83,6 +83,31 @@ export const InputConsumer: React.FC<TextInputBaseInterface> = ({
             className={`field-input`}
             onChange={context.onChange!}
           />
+        </div>
+      );
+    }
+    case "password": {
+      return (
+        <div className={className}>
+          {label && <span className='span-label'>{label}</span>}
+          <div className='field-password'>
+            <input
+              type={!showPassword ? type : "text"}
+              name={inputName}
+              value={fieldState}
+              className={`field-input`}
+              onChange={context.onChange!}
+            />
+            {fieldState ? (
+              <img
+                src={showPassword ? ShowIcon : HideIcon}
+                onClick={() => setShowPassword(!showPassword)}
+                draggable={false}
+              />
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
       );
     }

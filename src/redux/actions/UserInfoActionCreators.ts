@@ -116,13 +116,14 @@ const userInfoMockup: UserInfo = {
       balance: 75000,
       blocked: false,
       history: {
-        // "xxx55f6b-465i-4ea1-y4f3-09fe62ebccf1": {
-        //   title: "Оформление кредитной карты на 75000 RUB",
-        //   description: "Код атм пополнения: 453423",
-        //   currency: "RUB",
-        //   value: 5000,
-        //   date: 1647602345067,
-        // },
+        "xxxb5f6b-465i-4ea1-y4f3-09fe62ebccf1": {
+          title: "Оформление кредитной карты на 75000 RUB",
+          description: "Код атм пополнения: 453423",
+          type: "open_credit",
+          currency: "RUB",
+          value: 5000,
+          date: 1647602345067,
+        },
       },
     },
     "balance-7e91-4833-9f00-8244ffa6781d": {

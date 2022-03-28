@@ -1,4 +1,4 @@
-@import "../../base";
+@use "../../base" as colors;
 
 .notifications {
   display: flex;
@@ -36,9 +36,9 @@
     width: 100%;
 
     display: flex;
-    border: 1px solid color($primary-main);
+    border: 1px solid colors.color(colors.$primary-main);
     border-radius: 5px;
-    background-color: color($background-main);
+    background-color: colors.color(colors.$background-main);
 
     ul {
       display: flex;
@@ -48,7 +48,7 @@
         padding: 20px;
         display: flex;
         flex-direction: column;
-        border-bottom: 1px solid color($primary-main);
+        border-bottom: 1px solid colors.color(colors.$primary-main);
 
         .notifications-date {
           opacity: 0.7;
